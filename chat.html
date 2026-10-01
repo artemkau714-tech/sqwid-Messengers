@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#075e54">
+  <title>Sqwid Messenger</title>
+  <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+
+  <!-- Экран 1: Список чатов -->
+  <div id="screen-chats" class="screen active">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBurger">☰</button>
+      <h1>Чаты</h1>
+    </header>
+    <div class="search-bar">
+      <input id="searchInput" placeholder="Поиск чатов...">
+    </div>
+    <ul id="chatList" class="chat-list"></ul>
+    <button class="fab" id="btnCreateChat">+</button>
+  </div>
+
+  <!-- Экран 2: Открытый чат -->
+  <div id="screen-messages" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBack">←</button>
+      <h1 id="chatTitle" class="clickable-title">Чат</h1>
+    </header>
+    <div id="messages" class="messages"></div>
+    <div class="input-area" id="inputArea">
+      <input id="msgInput" placeholder="Сообщение...">
+      <button class="send-btn" id="btnSend">➤</button>
+    </div>
+  </div>
+
+  <!-- Экран 3: Профиль чата/канала -->
+  <div id="screen-chat-profile" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBackProfile">←</button>
+      <h1>Информация</h1>
+    </header>
+    <div class="chat-profile-body">
+      <img id="cpPhoto" class="cp-photo" alt="">
+      <h2 id="cpName">Название</h2>
+      <p id="cpType" class="cp-subtitle">тип</p>
+
+      <div class="cp-section">
+        <div class="cp-label">Описание</div>
+        <div id="cpDescription" class="cp-value">—</div>
+      </div>
+
+      <div class="cp-section" id="cpLinkSection" style="display:none;">
+        <div class="cp-label">Ссылка-приглашение</div>
+        <input id="cpInvite" readonly class="cp-link-input">
+        <button class="btn-create" id="btnCpCopy" style="margin-top:8px;">Копировать ссылку</button>
+      </div>
+
+      <div class="cp-section">
+        <div class="cp-label">Участники</div>
+        <div id="cpMembers" class="cp-members">—</div>
+      </div>
+
+      <button class="menu-item danger" id="btnLeaveChat" style="margin-top:20px;">
+        Выйти из чата
+      </button>
+    </div>
+  </div>
+
+  <!-- Экран 4: Настройки профиля -->
+  <div id="screen-settings" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBackSettings">←</button>
+      <h1>Настройки</h1>
+      <button class="icon-btn" id="btnSaveSettings" style="color:#00a884;font-size:22px;">✓</button>
+    </header>
+
+    <div class="settings-body">
+      <div class="settings-avatar-wrap">
+        <img id="settingsPhoto" class="settings-photo" alt="">
+        <label class="btn-change-avatar">
+          <input id="settingsAvatarInput" type="file" accept="image/*" style="display:none;">
+          Сменить аватар
+        </label>
+      </div>
+
+      <div class="settings-field">
+        <label>Имя</label>
+        <input id="settingsName" maxlength="30" placeholder="Ваше имя">
+      </div>
+
+      <div class="settings-field">
+        <label>Ник (@username)</label>
+        <input id="settingsUsername" maxlength="20" placeholder="username">
+        <div class="settings-hint">Только латиница, цифры и _ . От 3 до 20 символов</div>
+      </div>
+
+      <div class="settings-field">
+        <label>Описание</label>
+        <textarea id="settingsBio" maxlength="120" rows="3" placeholder="О себе"></textarea>
+      </div>
+
+      <div class="settings-field">
+        <label>Почта</label>
+        <div class="settings-email-row">
+          <span id="settingsEmail">—</span>
+          <button id="btnToggleEmailSettings" class="btn-toggle">Скрыть</button>
+        </div>
+      </div>
+
+      <div class="settings-field">
+        <label class="settings-toggle-row">
+          <input type="checkbox" id="settingsShowUsername">
+          <span>Показывать юзернейм другим</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: создание чата -->
+  <div id="modal-create" class="modal">
+    <div class="modal-content">
+      <h2>Новый чат</h2>
+
+      <label class="avatar-label">
+        <input id="chatAvatarInput" type="file" accept="image/*" style="display:none;">
+        <img id="chatAvatarPreview" style="display:none;">
+        <span id="chatAvatarText">Фото чата (необязательно)</span>
+      </label>
+
+      <input id="chatName" placeholder="Название чата">
+      <textarea id="chatDescription" placeholder="Описание (необязательно)" rows="2"
+        style="width:100%;padding:12px;margin-bottom:12px;border-radius:8px;border:none;background:#2a3942;color:#e9edef;font-size:15px;box-sizing:border-box;resize:none;"></textarea>
+
+      <select id="chatType">
+        <option value="public">Публичный чат</option>
+        <option value="private">Приватный чат</option>
+        <option value="group">Группа</option>
+        <option value="channel">Канал</option>
+      </select>
+      <select id="userSelect" multiple style="display:none;"></select>
+
+      <label id="channelPublicLabel" style="display:none;color:#8696a0;font-size:14px;margin:8px 0;flex-direction:row;align-items:center;">
+        <input type="checkbox" id="channelIsPublic" checked style="width:auto;margin-right:8px;">
+        Публичный канал (виден всем)
+      </label>
+
+      <div class="modal-buttons">
+        <button class="btn-cancel" id="btnCancel">Отмена</button>
+        <button class="btn-create" id="btnCreate">Создать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: ссылка-приглашение -->
+  <div id="modal-invite" class="modal">
+    <div class="modal-content">
+      <h2>Ссылка-приглашение</h2>
+      <p style="color:#8696a0;font-size:14px;">
+        Отправь эту ссылку тому, кого хочешь пригласить:
+      </p>
+      <input id="inviteLink" readonly style="background:#0b141a;color:#00a884;font-size:13px;">
+      <div class="modal-buttons">
+        <button class="btn-cancel" id="btnCloseInvite">Закрыть</button>
+        <button class="btn-create" id="btnCopyInvite">Копировать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Бургер-меню профиля -->
+  <div id="profileMenu" class="profile-menu">
+    <div class="profile-menu-inner">
+      <img id="profilePhoto" class="profile-photo" alt="">
+      <h2 id="profileName">Имя</h2>
+      <div class="profile-email-row">
+        <span id="profileEmail">email</span>
+        <button id="btnToggleEmail" class="btn-toggle">Скрыть</button>
+      </div>
+      <hr>
+      <button class="menu-item" id="btnSettings">Настройки</button>
+      <button class="menu-item" id="btnAbout">О приложении</button>
+      <button class="menu-item danger" id="btnLogout">Выйти</button>
+      <button class="menu-item" id="btnCloseProfile">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Модалка: О приложении -->
+  <div id="modal-about" class="modal">
+    <div class="modal-content">
+      <h2>О приложении</h2>
+      <p style="font-size:15px;line-height:1.5;">
+        Мессенджер создан с любовью — пользуйтесь наздоровье 💚
+      </p>
+      <p style="font-size:14px;color:#00a884;">
+        Разработчик: <b>sqw1d1k game</b>
+      </p>
+      <div class="modal-buttons">
+        <button class="btn-create" id="btnCloseAbout">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="scripts/chat.js"></script>
+</body>
+</html>

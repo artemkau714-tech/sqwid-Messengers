@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sqwid Messenger — Вход</title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Sqwid Messenger</h1>
+
+    <input id="email" type="email" placeholder="Email" autocomplete="email">
+    <input id="password" type="password" placeholder="Пароль" autocomplete="current-password">
+
+    <!-- Поля регистрации (скрыты по умолчанию) -->
+    <div id="registerFields" style="display:none;">
+      <input id="username" type="text" placeholder="Ваше имя" maxlength="30">
+      <label class="avatar-label">
+        <input id="avatarInput" type="file" accept="image/*" style="display:none;">
+        <span id="avatarPreviewText">Выбрать фото профиля</span>
+        <img id="avatarPreview" style="display:none;" alt="">
+      </label>
+    </div>
+
+    <button id="btnLogin">Войти</button>
+    <button id="btnRegister">Зарегистрироваться</button>
+    <button id="btnReset" class="btn-reset">Забыли пароль?</button>
+
+    <p id="status"></p>
+  </div>
+
+  <script type="module" src="scripts/index.js"></script>
+</body>
+</html>

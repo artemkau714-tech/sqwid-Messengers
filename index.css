@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #2c3e50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #34495e;
+  padding: 30px 24px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: #ecf0f1;
+  margin: 16px;
+}
+
+.container h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #ecf0f1;
+}
+
+.container input[type="email"],
+.container input[type="password"],
+.container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #7f8c8d;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #ecf0f1;
+  color: #2c3e50;
+}
+
+.container input:focus {
+  outline: none;
+  border-color: #3498db;
+  background-color: #fff;
+}
+
+.container button {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: #ecf0f1;
+}
+
+.container button:hover {
+  background-color: #2980b9;
+}
+
+.btn-reset {
+  background-color: #e67e22 !important;
+}
+
+#status {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #f39c12;
+  min-height: 20px;
+}
+
+#registerFields {
+  margin-top: 10px;
+}
+
+.avatar-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ecf0f1;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+.avatar-label span {
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.avatar-label img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
