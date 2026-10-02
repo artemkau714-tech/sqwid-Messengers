@@ -14,6 +14,7 @@
     <header class="app-bar">
       <button class="icon-btn" id="btnBurger">☰</button>
       <h1>Чаты</h1>
+      <button class="icon-btn" id="btnSearchUsers">🔍</button>
     </header>
     <div class="search-bar">
       <input id="searchInput" placeholder="Поиск чатов...">
@@ -35,7 +36,7 @@
     </div>
   </div>
 
-  <!-- Экран 3: Профиль чата/канала -->
+  <!-- Экран 3: Профиль чата -->
   <div id="screen-chat-profile" class="screen">
     <header class="app-bar">
       <button class="icon-btn" id="btnBackProfile">←</button>
@@ -118,6 +119,99 @@
     </div>
   </div>
 
+  <!-- Экран 5: Sqwid+ тарифы -->
+  <div id="screen-plus" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBackPlus">←</button>
+      <h1>⭐ Sqwid+</h1>
+    </header>
+    <div class="plus-body">
+      <div class="plus-hero">
+        <div class="plus-logo">⭐</div>
+        <h2>Sqwid+</h2>
+        <p class="plus-tagline">Больше возможностей, меньше ограничений</p>
+      </div>
+
+      <div class="plus-features">
+        <div class="plus-feature">✅ Значок ⭐ рядом с именем</div>
+        <div class="plus-feature">✅ Фото до 2 МБ</div>
+        <div class="plus-feature">✅ Голосовые до 60 секунд</div>
+        <div class="plus-feature">✅ Неограниченные чаты</div>
+        <div class="plus-feature">✅ Цветной ник</div>
+      </div>
+
+      <h3 style="text-align:center;color:#8696a0;margin:24px 0 12px;">Выбери период</h3>
+
+      <div class="tariff-list">
+        <button class="tariff-card" data-period="1">
+          <div class="tariff-name">1 месяц</div>
+          <div class="tariff-price">Уточняется</div>
+        </button>
+        <button class="tariff-card" data-period="3">
+          <div class="tariff-name">3 месяца</div>
+          <div class="tariff-price">Выгоднее</div>
+        </button>
+        <button class="tariff-card" data-period="6">
+          <div class="tariff-name">6 месяцев</div>
+          <div class="tariff-price">Максимальная выгода</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Экран 6: Бот Sqwid -->
+  <div id="screen-bot" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBackBot">←</button>
+      <h1>@sqwid</h1>
+    </header>
+    <div id="botMessages" class="messages"></div>
+    <div class="input-area" id="botInputArea">
+      <input id="botInput" placeholder="Написать сообщение...">
+      <button class="send-btn" id="btnBotSend">➤</button>
+    </div>
+  </div>
+
+  <!-- Экран 7: Поиск пользователей -->
+  <div id="screen-search-users" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBackSearch">←</button>
+      <h1>Поиск людей</h1>
+    </header>
+    <div class="search-bar">
+      <input id="userSearchInput" placeholder="Поиск по @юзернейму или имени...">
+    </div>
+    <ul id="userSearchList" class="chat-list"></ul>
+  </div>
+
+  <!-- Экран 8: Админ-панель -->
+  <div id="screen-admin" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn" id="btnBackAdmin">←</button>
+      <h1>👑 Админ-панель</h1>
+    </header>
+    <div class="admin-body">
+      <div class="settings-field">
+        <label>Найти пользователя</label>
+        <input id="adminSearch" placeholder="Поиск по @юзернейму или имени...">
+      </div>
+      <h3 style="color:#8696a0;font-size:14px;margin:20px 0 10px;">Пользователи</h3>
+      <ul id="adminUserList" class="chat-list" style="flex:none;"></ul>
+    </div>
+  </div>
+
+  <!-- Универсальная модалка -->
+  <div id="modal-alert" class="modal">
+    <div class="modal-content">
+      <h2 id="alertTitle">Сообщение</h2>
+      <p id="alertText" style="color:#cfd8dc;font-size:15px;line-height:1.5;margin:0 0 16px;white-space:pre-wrap;"></p>
+      <div class="modal-buttons">
+        <button class="btn-cancel" id="alertCancel" style="display:none;">Отмена</button>
+        <button class="btn-create" id="alertOk">ОК</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Модалка: создание чата -->
   <div id="modal-create" class="modal">
     <div class="modal-content">
@@ -168,6 +262,45 @@
     </div>
   </div>
 
+  <!-- Модалка: контекстное меню чата -->
+  <div id="modal-chatActions" class="modal">
+    <div class="modal-content">
+      <h2 id="chatActionsTitle">Чат</h2>
+      <div id="chatActionsList"></div>
+      <div class="modal-buttons" style="margin-top:12px;">
+        <button class="btn-cancel" id="btnChatActionsCancel">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: выдать Sqwid+ -->
+  <div id="modal-givePlus" class="modal">
+    <div class="modal-content">
+      <h2>Выдать Sqwid+</h2>
+      <p id="givePlusUser" style="color:#8696a0;font-size:14px;margin:0 0 16px;white-space:pre-wrap;"></p>
+
+      <h3 style="font-size:14px;color:#8696a0;margin:0 0 10px;">Срок:</h3>
+      <div class="tariff-list">
+        <button class="tariff-card give-plus-option" data-period="1">
+          <div class="tariff-name">1 месяц</div>
+        </button>
+        <button class="tariff-card give-plus-option" data-period="3">
+          <div class="tariff-name">3 месяца</div>
+        </button>
+        <button class="tariff-card give-plus-option" data-period="6">
+          <div class="tariff-name">6 месяцев</div>
+        </button>
+      </div>
+
+      <button class="btn-create" id="btnGivePlusConfirm" style="margin-top:16px;width:100%;">
+        Выдать
+      </button>
+      <button class="btn-cancel" id="btnGivePlusCancel" style="margin-top:8px;width:100%;">
+        Отмена
+      </button>
+    </div>
+  </div>
+
   <!-- Бургер-меню профиля -->
   <div id="profileMenu" class="profile-menu">
     <div class="profile-menu-inner">
@@ -182,6 +315,11 @@
       <button class="menu-item" id="btnAbout">О приложении</button>
       <button class="menu-item danger" id="btnLogout">Выйти</button>
       <button class="menu-item" id="btnCloseProfile">Закрыть</button>
+      <hr>
+      <button class="menu-item" id="btnAdminPanel" style="color:#ff6b6b;display:none;">
+        👑 Админ-панель
+      </button>
+      <button class="menu-item" id="btnSqwidPlus" style="color:#f7b500;">⭐ Sqwid+</button>
     </div>
   </div>
 
