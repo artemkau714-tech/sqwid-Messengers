@@ -34,6 +34,57 @@ const db = getDatabase(app);
 const ADMIN_EMAIL = "artemkau714@gmail.com";
 const RESERVED_SLUGS = ["sqwid", "admin", "support", "official", "help", "root"];
 const ACCOUNTS_KEY = "sqwid_accounts";
+const STAR_IMG = '<img src="sqwidstar.png" class="plus-inline-icon" alt="">';
+
+const THEMES = {
+  green:  { accent: "#00a884", light: "#00c99e", glow: "rgba(0,168,132,0.35)" },
+  blue:   { accent: "#3b82f6", light: "#60a5fa", glow: "rgba(59,130,246,0.35)" },
+  purple: { accent: "#a855f7", light: "#c084fc", glow: "rgba(168,85,247,0.35)" },
+  orange: { accent: "#f97316", light: "#fb923c", glow: "rgba(249,115,22,0.35)" },
+  red:    { accent: "#ef4444", light: "#f87171", glow: "rgba(239,68,68,0.35)" },
+  pink:   { accent: "#ec4899", light: "#f472b6", glow: "rgba(236,72,153,0.35)" }
+};
+
+const SHOP_ITEMS = [
+  { id: "nickColor_gold", name: "Золотой ник", price: 100, type: "nickColor", value: "#f7b500", icon: "🎨", preview: "Цвет: золото" },
+  { id: "nickColor_red", name: "Красный ник", price: 100, type: "nickColor", value: "#ef4444", icon: "🎨", preview: "Цвет: красный" },
+  { id: "nickColor_blue", name: "Синий ник", price: 100, type: "nickColor", value: "#3b82f6", icon: "🎨", preview: "Цвет: синий" },
+  { id: "nickColor_purple", name: "Фиолетовый ник", price: 150, type: "nickColor", value: "#a855f7", icon: "🎨", preview: "Цвет: фиолетовый" },
+  { id: "emoji_fire", name: "Огненный значок", price: 150, type: "emoji", value: "🔥", icon: "🔥", preview: "Значок рядом с именем" },
+  { id: "emoji_diamond", name: "Алмаз", price: 200, type: "emoji", value: "💎", icon: "💎", preview: "Значок рядом с именем" },
+  { id: "emoji_crown", name: "Корона", price: 250, type: "emoji", value: "👑", icon: "👑", preview: "Значок рядом с именем" },
+  { id: "frame_gold", name: "Золотая рамка", price: 200, type: "frame", value: "gold", icon: "🖼", preview: "Золотое кольцо вокруг авы" },
+  { id: "frame_fire", name: "Огненная рамка", price: 300, type: "frame", value: "fire", icon: "🖼", preview: "Огненное кольцо вокруг авы" },
+  { id: "frame_rainbow", name: "Радужная рамка", price: 500, type: "frame", value: "rainbow", icon: "🖼", preview: "Радужное кольцо вокруг авы" },
+
+  { id: "uname_piska67", name: "@piska67", price: 2500, type: "username", value: "piska67", icon: "🏷", preview: "Уникальный юзернейм" },
+  { id: "uname_fanat", name: "@fanat", price: 1500, type: "username", value: "fanat", icon: "🏷", preview: "Уникальный юзернейм" },
+  { id: "uname_BOG", name: "@BOG", price: 2000, type: "username", value: "BOG", icon: "🏷", preview: "Уникальный юзернейм" },
+  { id: "uname_durov", name: "@durov", price: 5000, type: "username", value: "durov", icon: "👑", preview: "Легендарный" },
+  { id: "uname_sqwidfan", name: "@sqwidfan", price: 800, type: "username", value: "sqwidfan", icon: "🏷", preview: "Уникальный" },
+  { id: "uname_sqwidplus", name: "@sqwid+", price: 1500, type: "username", value: "sqwid+", icon: "⭐", preview: "Уникальный" },
+  { id: "uname_fire", name: "@fire", price: 1200, type: "username", value: "fire", icon: "🔥", preview: "Уникальный" },
+  { id: "uname_god", name: "@god", price: 2000, type: "username", value: "god", icon: "🏷", preview: "Короткий" },
+  { id: "uname_king", name: "@king", price: 1800, type: "username", value: "king", icon: "👑", preview: "Короткий" },
+  { id: "uname_boss", name: "@boss", price: 1500, type: "username", value: "boss", icon: "🏷", preview: "Короткий" },
+  { id: "uname_pro", name: "@pro", price: 1500, type: "username", value: "pro", icon: "🏷", preview: "Короткий" },
+  { id: "uname_top", name: "@top", price: 1200, type: "username", value: "top", icon: "🏷", preview: "Короткий" },
+  { id: "uname_vip", name: "@vip", price: 1500, type: "username", value: "vip", icon: "💎", preview: "Короткий" },
+  { id: "uname_op", name: "@op", price: 1000, type: "username", value: "op", icon: "🏷", preview: "Короткий" },
+  { id: "uname_shadow", name: "@shadow", price: 1200, type: "username", value: "shadow", icon: "🌑", preview: "Красивый" },
+  { id: "uname_ghost", name: "@ghost", price: 1200, type: "username", value: "ghost", icon: "👻", preview: "Красивый" },
+  { id: "uname_phoenix", name: "@phoenix", price: 1500, type: "username", value: "phoenix", icon: "🦅", preview: "Красивый" },
+  { id: "uname_dragon", name: "@dragon", price: 1500, type: "username", value: "dragon", icon: "🐉", preview: "Красивый" },
+  { id: "uname_ninja", name: "@ninja", price: 1200, type: "username", value: "ninja", icon: "🥷", preview: "Красивый" },
+  { id: "uname_wolf", name: "@wolf", price: 1200, type: "username", value: "wolf", icon: "🐺", preview: "Красивый" },
+  { id: "uname_storm", name: "@storm", price: 1200, type: "username", value: "storm", icon: "⚡", preview: "Красивый" },
+  { id: "uname_frost", name: "@frost", price: 1200, type: "username", value: "frost", icon: "❄️", preview: "Красивый" },
+  { id: "uname_sqwidceo", name: "@sqwidceo", price: 3000, type: "username", value: "sqwidceo", icon: "👑", preview: "Sqwid-CEO" },
+  { id: "uname_sqwidteam", name: "@sqwidteam", price: 2000, type: "username", value: "sqwidteam", icon: "⭐", preview: "Команда Sqwid" },
+  { id: "uname_sigma", name: "@sigma", price: 1500, type: "username", value: "sigma", icon: "🗿", preview: "Мемный" },
+  { id: "uname_chad", name: "@chad", price: 1800, type: "username", value: "chad", icon: "💪", preview: "Мемный" },
+  { id: "uname_gigachad", name: "@gigachad", price: 2500, type: "username", value: "gigachad", icon: "🗿", preview: "Мемный" }
+];
 
 let currentUser = null;
 let currentUserData = {};
@@ -44,6 +95,7 @@ let unsubMessages = null;
 let unsubChats = null;
 let unsubLastRead = null;
 let unsubAllMessages = null;
+let unsubTheme = null;
 let chatAvatarBase64 = null;
 let settingsAvatarBase64 = null;
 let settingsAvatarChanged = false;
@@ -54,14 +106,18 @@ let botStarted = false;
 let pendingGivePlusUid = null;
 let pendingGivePlusName = "";
 let pendingGivePlusPeriod = null;
+let pendingGiveCoinsUid = null;
+let pendingGiveCoinsName = "";
+let pendingSellItem = null;
 let searchTab = "people";
 let lastReadMap = {};
 let unreadCounts = {};
 let toastTimer = null;
 let msgListenerStart = 0;
 let replyTo = null;
+let firstChatsLoad = true;
+let currentTheme = "green";
 
-// ==== Модалки ====
 function showAlert(text, title = "Сообщение") {
   return new Promise((resolve) => {
     document.getElementById("alertTitle").textContent = title;
@@ -106,7 +162,6 @@ function showConfirm(text, title = "Подтверждение") {
   });
 }
 
-// ==== Toast и звук ====
 function showToast(text) {
   const toast = document.getElementById("toast");
   if (!toast) return;
@@ -129,20 +184,20 @@ function playBeep() {
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
     osc.start();
     osc.stop(ctx.currentTime + 0.2);
-  } catch (e) {
-    console.error("Звук не сработал:", e);
-  }
+  } catch (e) {}
 }
 
-// ==== Авторизация ====
 onAuthStateChanged(auth, async (user) => {
   if (!user) { window.location.href = "index.html"; return; }
   currentUser = user;
   loadMyProfile();
   loadUsers();
+  showChatSkeleton();
   loadChats();
   loadLastRead();
+  loadTheme();
   await checkInvite();
+  await checkUserLink();
   checkAdmin();
   setTimeout(() => {
     saveCurrentAccount();
@@ -156,21 +211,74 @@ function checkAdmin() {
   }
 }
 
-// ==== Мой профиль ====
+/* ===== ТЕМА ===== */
+function loadTheme() {
+  if (unsubTheme) unsubTheme();
+  unsubTheme = onValue(ref(db, "users/" + currentUser.uid + "/theme"), (snap) => {
+    currentTheme = snap.val() || "green";
+    applyTheme(currentTheme);
+    updateThemePicker();
+  });
+}
+function applyTheme(name) {
+  const t = THEMES[name] || THEMES.green;
+  document.documentElement.style.setProperty("--accent", t.accent);
+  document.documentElement.style.setProperty("--accent-light", t.light);
+  document.documentElement.style.setProperty("--accent-glow", t.glow);
+}
+function updateThemePicker() {
+  document.querySelectorAll(".theme-swatch").forEach(sw => {
+    sw.classList.toggle("selected", sw.dataset.theme === currentTheme);
+  });
+}
+document.querySelectorAll(".theme-swatch").forEach(sw => {
+  sw.addEventListener("click", async () => {
+    if (!isPlusActive()) return showAlert("Смена темы доступна только Sqwid+", "Только Sqwid+");
+    await update(ref(db, "users/" + currentUser.uid), { theme: sw.dataset.theme });
+  });
+});
+
+/* ===== ПРОФИЛЬ ===== */
 function loadMyProfile() {
   onValue(ref(db, "users/" + currentUser.uid), (snapshot) => {
     currentUserData = snapshot.val() || {};
-    let myName = currentUserData.name || currentUser.email.split("@")[0];
-    const isMePlus = currentUserData.isPlus === true &&
-      (!currentUserData.plusUntil || Date.now() < currentUserData.plusUntil);
-    if (isMePlus) myName = "⭐ " + myName;
-    document.getElementById("profileName").textContent = myName;
-
-    const photo = document.getElementById("profilePhoto");
-    if (currentUserData.photo) photo.src = currentUserData.photo;
-    else photo.src = svgAvatar(currentUserData.name || "?");
+    updateMyProfileUI();
     updateEmailVisibility();
+    updateCoinsUI();
   });
+}
+
+function updateMyProfileUI() {
+  let myName = currentUserData.name || currentUser.email.split("@")[0];
+  const isMePlus = currentUserData.isPlus === true &&
+    (!currentUserData.plusUntil || Date.now() < currentUserData.plusUntil);
+  const nickColor = currentUserData.nickColor;
+  const emoji = currentUserData.nickEmoji;
+
+  let nameHTML = "";
+  if (isMePlus) nameHTML += STAR_IMG + " ";
+  if (nickColor) nameHTML += `<span style="color:${nickColor}">${escapeHtml(myName)}</span>`;
+  else nameHTML += escapeHtml(myName);
+  if (emoji) nameHTML += ` <span class="nick-emoji">${emoji}</span>`;
+  document.getElementById("profileName").innerHTML = nameHTML;
+
+  const photo = document.getElementById("profilePhoto");
+  if (currentUserData.photo) photo.src = currentUserData.photo;
+  else photo.src = svgAvatar(myName);
+}
+
+function updateCoinsUI() {
+  const coins = currentUserData.coins || 0;
+  const burgerEl = document.getElementById("burgerCoins");
+  if (burgerEl) burgerEl.textContent = coins;
+  const shopEl = document.getElementById("shopBalance");
+  if (shopEl) shopEl.textContent = "🪙 " + coins + " SQ";
+  const shopBig = document.getElementById("shopBalanceBig");
+  if (shopBig) shopBig.textContent = "🪙 " + coins + " SQ";
+  const shopBig2 = document.getElementById("shopBalanceBig2");
+  if (shopBig2) shopBig2.textContent = "🪙 " + coins + " SQ";
+  const mpEl = document.getElementById("mpCoins");
+  if (mpEl) mpEl.textContent = "🪙 " + coins + " SQ";
 }
 
 function updateEmailVisibility() {
@@ -186,7 +294,539 @@ document.getElementById("btnToggleEmail").addEventListener("click", async () => 
   await update(ref(db, "users/" + currentUser.uid), { hideEmail: v });
 });
 
-// ==== Меню ====
+document.getElementById("btnMyProfile").addEventListener("click", () => {
+  document.getElementById("profileMenu").classList.remove("active");
+  openMyProfile();
+});
+document.getElementById("btnBackMyProfile").addEventListener("click", () => showScreen("screen-chats"));
+document.getElementById("btnEditProfile").addEventListener("click", () => openSettings());
+document.getElementById("btnMySqwidPlus").addEventListener("click", () => showScreen("screen-plus"));
+document.getElementById("btnAboutFromSettings").addEventListener("click", () => {
+  document.getElementById("modal-about").classList.add("active");
+});
+document.getElementById("btnOpenShop").addEventListener("click", () => openShop());
+document.getElementById("btnOpenShopBurger").addEventListener("click", () => {
+  document.getElementById("profileMenu").classList.remove("active");
+  openShop();
+});
+document.getElementById("btnOpenInventory").addEventListener("click", () => {
+  document.getElementById("profileMenu").classList.remove("active");
+  openInventory();
+});
+
+async function openMyProfile() {
+  showScreen("screen-my-profile");
+  const photo = document.getElementById("mpPhoto");
+  if (currentUserData.photo) photo.src = currentUserData.photo;
+  else photo.src = svgAvatar(currentUserData.name || "?");
+
+  let myName = currentUserData.name || currentUser.email.split("@")[0];
+  const isMePlus = isPlusActive();
+  const nickColor = currentUserData.nickColor;
+  const emoji = currentUserData.nickEmoji;
+
+  let nameHTML = "";
+  if (isMePlus) nameHTML += STAR_IMG + " ";
+  if (nickColor) nameHTML += `<span style="color:${nickColor}">${escapeHtml(myName)}</span>`;
+  else nameHTML += escapeHtml(myName);
+  if (emoji) nameHTML += ` <span class="nick-emoji">${emoji}</span>`;
+  document.getElementById("mpName").innerHTML = nameHTML;
+
+  document.getElementById("mpUsername").textContent =
+    currentUserData.username ? "@" + currentUserData.username : "нет юзернейма";
+  document.getElementById("mpBio").textContent =
+    currentUserData.bio || "Расскажите о себе в настройках";
+  updateCoinsUI();
+
+  const chatsSnap = await get(ref(db, "chats"));
+  const chats = chatsSnap.val() || {};
+  let myChats = 0;
+  for (const id in chats) {
+    const c = chats[id];
+    if (c.members && c.members[currentUser.uid]) myChats++;
+  }
+  document.getElementById("mpStatChats").textContent = myChats;
+
+  const msgsSnap = await get(ref(db, "messages"));
+  const allMsgs = msgsSnap.val() || {};
+  let myMessages = 0, myPhotos = 0;
+  for (const chatId in allMsgs) {
+    const msgs = allMsgs[chatId] || {};
+    for (const mid in msgs) {
+      const m = msgs[mid];
+      if (m.sender === currentUser.uid) {
+        myMessages++;
+        if (m.type === "photo") myPhotos++;
+      }
+    }
+  }
+  document.getElementById("mpStatMessages").textContent = myMessages;
+  document.getElementById("mpStatPhotos").textContent = myPhotos;
+}
+
+document.getElementById("mpPhoto").addEventListener("click", () => {
+  if (!currentUserData.photo) return;
+  document.getElementById("photoViewerImg").src = currentUserData.photo;
+  document.getElementById("photoViewer").classList.add("active");
+});
+
+document.getElementById("btnShareProfile").addEventListener("click", () => {
+  const base = window.location.origin + window.location.pathname.replace("chat.html", "");
+  const link = currentUserData.username
+    ? base + "chat.html?u=" + currentUserData.username
+    : base + "chat.html?uid=" + currentUser.uid;
+  document.getElementById("shareLink").value = link;
+  document.getElementById("modal-share").classList.add("active");
+});
+document.getElementById("btnCloseShare").addEventListener("click", () => {
+  document.getElementById("modal-share").classList.remove("active");
+});
+document.getElementById("btnCopyShare").addEventListener("click", () => {
+  copyToClipboard(document.getElementById("shareLink").value);
+});
+
+/* ===== МАГАЗИН ===== */
+document.getElementById("btnBackShop").addEventListener("click", () => showScreen("screen-chats"));
+document.getElementById("btnBackInventory").addEventListener("click", () => showScreen("screen-shop"));
+
+document.querySelectorAll(".shop-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll(".shop-tab").forEach(t => t.classList.toggle("active", t === tab));
+    document.getElementById("shopTabShop").style.display = target === "shop" ? "block" : "none";
+    document.getElementById("shopTabMarket").style.display = target === "market" ? "block" : "none";
+    document.getElementById("shopTabMy").style.display = target === "my" ? "block" : "none";
+    if (target === "market") renderMarket();
+    if (target === "my") renderMyUsernames();
+    if (target === "shop") renderShop();
+  });
+});
+
+function openShop() {
+  renderShop();
+  updateCoinsUI();
+  document.querySelectorAll(".shop-tab").forEach(t => t.classList.toggle("active", t.dataset.tab === "shop"));
+  document.getElementById("shopTabShop").style.display = "block";
+  document.getElementById("shopTabMarket").style.display = "none";
+  document.getElementById("shopTabMy").style.display = "none";
+  showScreen("screen-shop");
+}
+
+async function renderShop() {
+  const nicks = SHOP_ITEMS.filter(i => i.type === "nickColor");
+  const emojis = SHOP_ITEMS.filter(i => i.type === "emoji");
+  const frames = SHOP_ITEMS.filter(i => i.type === "frame");
+  const usernames = SHOP_ITEMS.filter(i => i.type === "username");
+  await renderShopGrid("shopGridNicks", nicks);
+  await renderShopGrid("shopGridEmojis", emojis);
+  await renderShopGrid("shopGridFrames", frames);
+  await renderShopGrid("shopGridUsernames", usernames);
+}
+
+async function renderShopGrid(containerId, items) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "";
+  const inv = currentUserData.inventory || {};
+
+  const allUsersSnap = await get(ref(db, "users"));
+  const allUsers = allUsersSnap.val() || {};
+  const takenUsernames = {};
+  for (const uid in allUsers) {
+    if (allUsers[uid].username) takenUsernames[allUsers[uid].username] = uid;
+  }
+
+  items.forEach(item => {
+    const owned = inv[item.id] === true;
+    let isEquipped = false;
+    if (item.type === "nickColor") isEquipped = currentUserData.nickColor === item.value;
+    else if (item.type === "emoji") isEquipped = currentUserData.nickEmoji === item.value;
+    else if (item.type === "frame") isEquipped = currentUserData.avatarFrame === item.value;
+    else if (item.type === "username") isEquipped = currentUserData.username === item.value;
+
+    let sold = false;
+    if (item.type === "username") {
+      const ownerUid = takenUsernames[item.value];
+      if (ownerUid && ownerUid !== currentUser.uid) sold = true;
+    }
+
+    const el = document.createElement("div");
+    el.className = "shop-item" + (sold ? " sold" : "");
+    let btnHTML = "", btnClass = "";
+    if (!sold) {
+      if (isEquipped) { btnHTML = "✓ Активен"; btnClass = "equipped"; }
+      else if (owned) { btnHTML = "Куплено"; btnClass = "owned"; }
+      else btnHTML = "Купить";
+    }
+
+    el.innerHTML = `
+      <div class="shop-item-icon">${item.icon}</div>
+      <div class="shop-item-info">
+        <div class="shop-item-name">${escapeHtml(item.name)}</div>
+        <div class="shop-item-preview">${escapeHtml(item.preview)}</div>
+        <div class="shop-item-price">🪙 ${item.price} SQ</div>
+      </div>
+      ${!sold ? `<button class="shop-item-btn ${btnClass}">${btnHTML}</button>` : ""}
+    `;
+    const btn = el.querySelector(".shop-item-btn");
+    if (btn) {
+      if (!owned) btn.addEventListener("click", () => buyItem(item));
+      else if (!isEquipped) btn.addEventListener("click", () => equipItem(item));
+    }
+    container.appendChild(el);
+  });
+}
+
+async function buyItem(item) {
+  const coins = currentUserData.coins || 0;
+  if (coins < item.price) return showAlert(`Недостаточно SQ.\n\nНужно: ${item.price}\nУ вас: ${coins}`, "Мало монет");
+
+  if (item.type === "username") {
+    const allUsers = await get(ref(db, "users"));
+    const users = allUsers.val() || {};
+    for (const uid in users) {
+      if (uid !== currentUser.uid && users[uid].username === item.value) {
+        return showAlert(`@${item.value} уже занят`, "Занято");
+      }
+    }
+  }
+
+  const ok = await showConfirm(`Купить «${item.name}» за ${item.price} SQ?`, "Покупка");
+  if (!ok) return;
+
+  const updates = { coins: coins - item.price };
+  updates[`inventory/${item.id}`] = true;
+
+  // Юзернейм сразу становится основным
+  if (item.type === "username") {
+    updates.username = item.value;
+  }
+
+  try {
+    await update(ref(db, "users/" + currentUser.uid), updates);
+    showAlert(`Куплено: ${item.name}`, "Готово");
+    await renderShop();
+  } catch (e) { showAlert("Ошибка: " + e.message, "Ошибка"); }
+}
+
+async function equipItem(item, silent = false) {
+  const updates = {};
+  if (item.type === "nickColor") updates.nickColor = item.value;
+  else if (item.type === "emoji") updates.nickEmoji = item.value;
+  else if (item.type === "frame") updates.avatarFrame = item.value;
+  else if (item.type === "username") {
+    const allUsers = await get(ref(db, "users"));
+    const users = allUsers.val() || {};
+    for (const uid in users) {
+      if (uid !== currentUser.uid && users[uid].username === item.value) {
+        return showAlert(`@${item.value} занят`, "Занято");
+      }
+    }
+    updates.username = item.value;
+  }
+  try {
+    await update(ref(db, "users/" + currentUser.uid), updates);
+    if (!silent) showToast("Активировано: " + item.name);
+    await renderShop();
+  } catch (e) { showAlert("Ошибка: " + e.message, "Ошибка"); }
+}
+
+/* ===== МАРКЕТ ===== */
+async function renderMarket() {
+  const grid = document.getElementById("marketGrid");
+  grid.innerHTML = `<div style="padding:40px;text-align:center;color:#8696a0;">Загрузка...</div>`;
+  const snap = await get(ref(db, "market"));
+  const listings = snap.val() || {};
+  grid.innerHTML = "";
+  const ids = Object.keys(listings);
+  if (ids.length === 0) {
+    grid.innerHTML = `<div style="padding:40px 20px;text-align:center;color:#8696a0;">Пока никто не продаёт юзернеймы</div>`;
+    return;
+  }
+  ids.forEach(itemId => {
+    const listing = listings[itemId];
+    const item = SHOP_ITEMS.find(i => i.id === itemId);
+    if (!item) return;
+    const isOwn = listing.sellerUid === currentUser.uid;
+    const el = document.createElement("div");
+    el.className = "shop-item on-sale";
+    el.innerHTML = `
+      <div class="shop-item-icon">${item.icon}</div>
+      <div class="shop-item-info">
+        <div class="shop-item-name">@${escapeHtml(listing.username)}</div>
+        <div class="shop-item-preview">Продавец: ${escapeHtml(listing.sellerName || "—")}</div>
+        <div class="shop-item-price">🪙 ${listing.price} SQ</div>
+      </div>
+      ${!isOwn ? `<button class="shop-item-btn buy-market">Купить</button>` : `<button class="shop-item-btn sell" data-cancel="1">Снять</button>`}
+    `;
+    if (!isOwn) el.querySelector(".buy-market").addEventListener("click", () => buyFromMarket(itemId, listing, item));
+    else el.querySelector('[data-cancel]').addEventListener("click", () => cancelListing(itemId));
+    grid.appendChild(el);
+  });
+}
+
+async function buyFromMarket(itemId, listing, item) {
+  const coins = currentUserData.coins || 0;
+  if (coins < listing.price) return showAlert(`Недостаточно SQ.\n\nНужно: ${listing.price}\nУ вас: ${coins}`, "Мало монет");
+  const ok = await showConfirm(`Купить @${listing.username} за ${listing.price} SQ?`, "Покупка");
+  if (!ok) return;
+
+  try {
+    await update(ref(db, "users/" + currentUser.uid), {
+      coins: coins - listing.price,
+      [`inventory/${itemId}`]: true,
+      username: listing.username
+    });
+    const sellerSnap = await get(ref(db, "users/" + listing.sellerUid + "/coins"));
+    const sellerCoins = sellerSnap.val() || 0;
+    await update(ref(db, "users/" + listing.sellerUid), {
+      coins: sellerCoins + listing.price,
+      [`inventory/${itemId}`]: null,
+      username: null
+    });
+    await remove(ref(db, "market/" + itemId));
+    showAlert(`Куплено: @${listing.username}`, "Готово");
+    renderMarket();
+    renderShop();
+  } catch (e) { showAlert("Ошибка: " + e.message, "Ошибка"); }
+}
+
+async function cancelListing(itemId) {
+  const ok = await showConfirm("Снять лот с продажи?", "Отмена продажи");
+  if (!ok) return;
+  await remove(ref(db, "market/" + itemId));
+  showToast("Лот снят");
+  renderMarket();
+  renderMyUsernames();
+}
+
+/* ===== МОИ ЮЗЕРНЕЙМЫ ===== */
+async function renderMyUsernames() {
+  const grid = document.getElementById("myUsernamesGrid");
+  grid.innerHTML = "";
+  const inv = currentUserData.inventory || {};
+  const myNames = SHOP_ITEMS.filter(i => i.type === "username" && inv[i.id] === true);
+  if (myNames.length === 0) {
+    grid.innerHTML = `<div style="padding:40px 20px;text-align:center;color:#8696a0;">У вас нет купленных юзернеймов</div>`;
+    return;
+  }
+  const snap = await get(ref(db, "market"));
+  const listings = snap.val() || {};
+  myNames.forEach(item => {
+    const isActive = currentUserData.username === item.value;
+    const onSale = listings[item.id] !== undefined;
+    const el = document.createElement("div");
+    el.className = "shop-item" + (isActive ? " on-sale" : "");
+    let statusText = isActive ? "● Активен" : onSale ? "🏪 На продаже" : "Не активен";
+    el.innerHTML = `
+      <div class="shop-item-icon">${item.icon}</div>
+      <div class="shop-item-info">
+        <div class="shop-item-name">@${escapeHtml(item.value)}</div>
+        <div class="shop-item-preview">${statusText}</div>
+      </div>
+      ${!onSale ? `<button class="shop-item-btn sell">Продать</button>` : `<button class="shop-item-btn sell" data-cancel="1">Снять</button>`}
+    `;
+    if (!onSale) el.querySelector(".sell").addEventListener("click", () => openSellModal(item));
+    else el.querySelector('[data-cancel]').addEventListener("click", () => cancelListing(item.id));
+    grid.appendChild(el);
+  });
+}
+
+function openSellModal(item) {
+  pendingSellItem = item;
+  document.getElementById("sellItemName").textContent = "@" + item.value;
+  document.getElementById("sellPrice").value = item.price || 1000;
+  document.getElementById("modal-sell").classList.add("active");
+}
+
+document.getElementById("btnSellCancel").addEventListener("click", () => {
+  document.getElementById("modal-sell").classList.remove("active");
+  pendingSellItem = null;
+});
+
+document.getElementById("btnSellConfirm").addEventListener("click", async () => {
+  if (!pendingSellItem) return;
+  const price = parseInt(document.getElementById("sellPrice").value);
+  if (isNaN(price) || price <= 0) return showAlert("Введи цену больше 0", "Ошибка");
+  try {
+    await set(ref(db, "market/" + pendingSellItem.id), {
+      sellerUid: currentUser.uid,
+      sellerName: currentUserData.name || currentUser.email,
+      username: pendingSellItem.value,
+      price: price,
+      listedAt: Date.now()
+    });
+    document.getElementById("modal-sell").classList.remove("active");
+    showAlert(`@${pendingSellItem.value} выставлен за ${price} SQ`, "Готово");
+    pendingSellItem = null;
+    renderMyUsernames();
+  } catch (e) { showAlert("Ошибка: " + e.message, "Ошибка"); }
+});
+
+/* ===== ИНВЕНТАРЬ ===== */
+function openInventory() {
+  renderInventory();
+  showScreen("screen-inventory");
+}
+
+async function renderInventory() {
+  const all = document.getElementById("inventoryAll");
+  const active = document.getElementById("inventoryActive");
+  all.innerHTML = "";
+  active.innerHTML = "";
+
+  const inv = currentUserData.inventory || {};
+  const ids = Object.keys(inv);
+  if (ids.length === 0) {
+    all.innerHTML = `<div style="padding:40px 20px;text-align:center;color:#8696a0;">Пусто. Купи что-нибудь в магазине.</div>`;
+    return;
+  }
+
+  const marketSnap = await get(ref(db, "market"));
+  const market = marketSnap.val() || {};
+
+  ids.forEach(id => {
+    const item = SHOP_ITEMS.find(i => i.id === id);
+    if (!item) return;
+
+    let isEquipped = false;
+    if (item.type === "nickColor") isEquipped = currentUserData.nickColor === item.value;
+    else if (item.type === "emoji") isEquipped = currentUserData.nickEmoji === item.value;
+    else if (item.type === "frame") isEquipped = currentUserData.avatarFrame === item.value;
+    else if (item.type === "username") isEquipped = currentUserData.username === item.value;
+
+    const onSale = market[item.id] !== undefined;
+
+    const el = document.createElement("div");
+    el.className = "inventory-item" + (isEquipped ? " active" : "");
+
+    let statusText = item.preview;
+    if (item.type === "username" && isEquipped) statusText = "● Активен";
+    else if (isEquipped) statusText = "● Активно";
+
+    let actions = "";
+    if (item.type === "username") {
+      if (isEquipped) {
+        actions = `<button class="inventory-item-btn" disabled>● Активен</button>`;
+      } else {
+        actions = `<button class="inventory-item-btn" data-action="activate">Сделать активным</button>`;
+      }
+      if (!onSale) {
+        actions += `<button class="inventory-item-btn sell" data-action="sell">Продать</button>`;
+      } else {
+        actions += `<button class="inventory-item-btn sell" data-action="cancel-sale">Снять</button>`;
+      }
+    } else {
+      if (isEquipped) {
+        actions = `<button class="inventory-item-btn remove" data-action="remove">Снять</button>`;
+      } else {
+        actions = `<button class="inventory-item-btn" data-action="activate">Надеть</button>`;
+      }
+    }
+
+    el.innerHTML = `
+      <div class="inventory-item-icon">${item.icon}</div>
+      <div class="inventory-item-info">
+        <div class="inventory-item-name">${escapeHtml(item.name)}</div>
+        <div class="inventory-item-status">${statusText}</div>
+      </div>
+      <div class="inventory-item-actions">${actions}</div>
+    `;
+
+    el.querySelectorAll("[data-action]").forEach(btn => {
+      const action = btn.dataset.action;
+      btn.addEventListener("click", async () => {
+        if (action === "activate") await equipItem(item, false).then(renderInventory);
+        else if (action === "remove") await unequipItem(item).then(renderInventory);
+        else if (action === "sell") openSellModal(item);
+        else if (action === "cancel-sale") await cancelListing(item.id).then(renderInventory);
+      });
+    });
+
+    all.appendChild(el);
+    if (isEquipped) active.appendChild(el.cloneNode(true));
+  });
+
+  if (active.children.length === 0) {
+    active.innerHTML = `<div style="padding:20px;text-align:center;color:#8696a0;">Ничего не надето</div>`;
+  }
+}
+
+async function unequipItem(item) {
+  const updates = {};
+  if (item.type === "nickColor") updates.nickColor = null;
+  else if (item.type === "emoji") updates.nickEmoji = null;
+  else if (item.type === "frame") updates.avatarFrame = null;
+  else if (item.type === "username") updates.username = null;
+  try {
+    await update(ref(db, "users/" + currentUser.uid), updates);
+    showToast("Снято: " + item.name);
+  } catch (e) { showAlert("Ошибка: " + e.message, "Ошибка"); }
+}
+
+/* ===== ССЫЛКА НА ПРОФИЛЬ ===== */
+async function checkUserLink() {
+  const params = new URLSearchParams(window.location.search);
+  const username = params.get("u");
+  const uid = params.get("uid");
+  if (!username && !uid) return;
+
+  let targetUid = uid;
+  if (username && !targetUid) {
+    const usersSnap = await get(ref(db, "users"));
+    const users = usersSnap.val() || {};
+    for (const u in users) {
+      if (users[u].username && users[u].username.toLowerCase() === username.toLowerCase()) {
+        targetUid = u;
+        break;
+      }
+    }
+  }
+  if (!targetUid) {
+    showAlert("Пользователь не найден", "Ошибка");
+    window.history.replaceState({}, "", "chat.html");
+    return;
+  }
+  const userSnap = await get(ref(db, "users/" + targetUid));
+  const u = userSnap.val();
+  if (!u) {
+    showAlert("Пользователь не найден", "Ошибка");
+    window.history.replaceState({}, "", "chat.html");
+    return;
+  }
+  window.history.replaceState({}, "", "chat.html");
+  showUserProfile(targetUid, u);
+}
+
+function showUserProfile(uid, u) {
+  const photo = document.getElementById("upPhoto");
+  if (u.photo) photo.src = u.photo;
+  else photo.src = svgAvatar(u.name || "?");
+
+  const wrap = document.getElementById("upFrameWrap");
+  wrap.classList.remove("frame-gold", "frame-fire", "frame-rainbow");
+  if (u.avatarFrame) wrap.classList.add("frame-" + u.avatarFrame);
+
+  let name = u.name || u.email || "Пользователь";
+  const isPlus = u.isPlus === true && (!u.plusUntil || Date.now() < u.plusUntil);
+  let nameHTML = "";
+  if (isPlus) nameHTML += STAR_IMG + " ";
+  if (u.nickColor) nameHTML += `<span style="color:${u.nickColor}">${escapeHtml(name)}</span>`;
+  else nameHTML += escapeHtml(name);
+  if (u.nickEmoji) nameHTML += ` <span class="nick-emoji">${u.nickEmoji}</span>`;
+  document.getElementById("upName").innerHTML = nameHTML;
+
+  document.getElementById("upUsername").textContent = u.username ? "@" + u.username : "";
+  document.getElementById("upBio").textContent = u.bio || "Без описания";
+
+  document.getElementById("btnUpWrite").onclick = () => {
+    startPrivateChatWith(uid, name);
+  };
+  showScreen("screen-user-profile");
+}
+document.getElementById("btnBackUserProfile").addEventListener("click", () => showScreen("screen-chats"));
+
+/* ===== МЕНЮ ===== */
 document.getElementById("btnBurger").addEventListener("click", () =>
   document.getElementById("profileMenu").classList.add("active"));
 document.getElementById("btnCloseProfile").addEventListener("click", () =>
@@ -202,7 +842,7 @@ document.getElementById("btnLogout").addEventListener("click", () => {
   signOut(auth);
 });
 
-// ==== Навигация ====
+/* ===== НАВИГАЦИЯ ===== */
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -218,9 +858,7 @@ document.getElementById("btnBackProfile").addEventListener("click", () => {
   if (currentChatId) {
     document.getElementById("chatTitle").textContent = currentChatData.name;
     showScreen("screen-messages");
-  } else {
-    showScreen("screen-chats");
-  }
+  } else showScreen("screen-chats");
 });
 document.getElementById("btnBackSettings").addEventListener("click", () => showScreen("screen-chats"));
 document.getElementById("btnBackMemory").addEventListener("click", () => showScreen("screen-settings"));
@@ -230,7 +868,7 @@ document.getElementById("btnBackSearch").addEventListener("click", () => showScr
 document.getElementById("btnBackAdmin").addEventListener("click", () => showScreen("screen-chats"));
 document.getElementById("btnBackAccounts").addEventListener("click", () => showScreen("screen-chats"));
 
-// ==== Настройки ====
+/* ===== НАСТРОЙКИ ===== */
 document.getElementById("btnSettings").addEventListener("click", () => {
   document.getElementById("profileMenu").classList.remove("active");
   openSettings();
@@ -248,7 +886,9 @@ function openSettings() {
   document.getElementById("settingsBio").value = currentUserData.bio || "";
   document.getElementById("settingsEmail").textContent = currentUser.email;
   document.getElementById("settingsShowUsername").checked = currentUserData.showUsername !== false;
+  document.getElementById("settingsHideOnline").checked = currentUserData.hideOnline === true;
   updateSettingsEmailBtn();
+  updateThemePicker();
   showScreen("screen-settings");
 }
 
@@ -281,36 +921,40 @@ async function saveSettings() {
   const usernameRaw = document.getElementById("settingsUsername").value.trim().toLowerCase();
   const bio = document.getElementById("settingsBio").value.trim();
   const showUsername = document.getElementById("settingsShowUsername").checked;
+  const hideOnline = document.getElementById("settingsHideOnline").checked;
   if (!name) return showAlert("Имя не может быть пустым", "Ошибка");
 
   let username = "";
   if (usernameRaw) {
-    if (!/^[a-z0-9_]{3,20}$/.test(usernameRaw)) {
-      return showAlert("Ник: только латиница, цифры и _, от 3 до 20 символов", "Ошибка");
-    }
+    if (!/^[a-z0-9_]{3,20}$/.test(usernameRaw)) return showAlert("Ник: только латиница, цифры и _, от 3 до 20", "Ошибка");
     username = usernameRaw;
+
+    const PREMIUM = SHOP_ITEMS.filter(i => i.type === "username").map(i => i.value.toLowerCase());
+    if (PREMIUM.includes(username.toLowerCase())) {
+      return showAlert("Этот юзернейм можно только купить в магазине", "Занято");
+    }
+
     const allUsers = await get(ref(db, "users"));
     const users = allUsers.val() || {};
     for (const uid in users) {
-      if (uid !== currentUser.uid && users[uid].username === username) {
+      if (uid !== currentUser.uid && users[uid].username && users[uid].username.toLowerCase() === username.toLowerCase()) {
         return showAlert("Этот ник уже занят", "Ошибка");
       }
     }
   }
 
-  const updates = { name, username, bio, showUsername };
+  const updates = { name, bio, showUsername, hideOnline };
+  if (username) updates.username = username;
   if (settingsAvatarChanged && settingsAvatarBase64) updates.photo = settingsAvatarBase64;
 
   try {
     await update(ref(db, "users/" + currentUser.uid), updates);
     showAlert("Профиль сохранён", "Готово");
     showScreen("screen-chats");
-  } catch (e) {
-    showAlert("Ошибка: " + e.message, "Ошибка");
-  }
+  } catch (e) { showAlert("Ошибка: " + e.message, "Ошибка"); }
 }
 
-// ==== Память ====
+/* ===== ПАМЯТЬ ===== */
 document.getElementById("btnMemory").addEventListener("click", () => openMemoryScreen());
 
 async function openMemoryScreen() {
@@ -318,27 +962,17 @@ async function openMemoryScreen() {
   document.getElementById("memoryPhotos").textContent = "—";
   document.getElementById("memoryTexts").textContent = "—";
   showScreen("screen-memory");
-
   const snap = await get(ref(db, "messages"));
   const allChats = snap.val() || {};
-
-  let photoBytes = 0;
-  let photoCount = 0;
-  let textCount = 0;
-
+  let photoBytes = 0, photoCount = 0, textCount = 0;
   for (const chatId in allChats) {
     const msgs = allChats[chatId] || {};
     for (const mid in msgs) {
       const m = msgs[mid];
-      if (m.type === "photo" && m.photo) {
-        photoCount++;
-        photoBytes += m.photo.length;
-      } else {
-        textCount++;
-      }
+      if (m.type === "photo" && m.photo) { photoCount++; photoBytes += m.photo.length; }
+      else textCount++;
     }
   }
-
   document.getElementById("memoryTotal").textContent = formatBytes(photoBytes);
   document.getElementById("memoryPhotos").textContent = photoCount + " шт · " + formatBytes(photoBytes);
   document.getElementById("memoryTexts").textContent = textCount + " сообщений";
@@ -352,42 +986,30 @@ function formatBytes(bytes) {
 }
 
 document.getElementById("btnClearPhotos").addEventListener("click", async () => {
-  const ok = await showConfirm(
-    "Все фото во всех чатах будут удалены. Текст останется. Восстановить нельзя.",
-    "Очистить фото?"
-  );
+  const ok = await showConfirm("Все фото во всех чатах будут удалены. Текст останется.", "Очистить фото?");
   if (!ok) return;
-
   const snap = await get(ref(db, "messages"));
   const allChats = snap.val() || {};
   let removed = 0;
-
   for (const chatId in allChats) {
     const msgs = allChats[chatId] || {};
     for (const mid in msgs) {
       const m = msgs[mid];
       if (m.type === "photo" && m.photo) {
-        await update(ref(db, "messages/" + chatId + "/" + mid), {
-          type: "text",
-          text: "[фото удалено]",
-          photo: null
-        });
+        await update(ref(db, "messages/" + chatId + "/" + mid), { type: "text", text: "[фото удалено]", photo: null });
         removed++;
       }
     }
   }
-
   showAlert(`Удалено фото: ${removed}`, "Готово");
   openMemoryScreen();
 });
 
-// ==== Аккаунты ====
+/* ===== АККАУНТЫ ===== */
 function getSavedAccounts() {
-  try { return JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || "[]"); }
-  catch { return []; }
+  try { return JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || "[]"); } catch { return []; }
 }
 function saveSavedAccounts(arr) { localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(arr)); }
-
 function saveCurrentAccount() {
   const email = currentUser.email;
   const accounts = getSavedAccounts();
@@ -400,10 +1022,8 @@ function saveCurrentAccount() {
   }
   saveSavedAccounts(accounts);
 }
-
 function removeCurrentAccount() {
-  const email = currentUser.email;
-  const accounts = getSavedAccounts().filter(a => a.email !== email);
+  const accounts = getSavedAccounts().filter(a => a.email !== currentUser.email);
   saveSavedAccounts(accounts);
 }
 
@@ -417,18 +1037,15 @@ function renderAccounts() {
   const list = document.getElementById("accountsList");
   list.innerHTML = "";
   const accounts = getSavedAccounts();
-
   if (accounts.length === 0) {
     list.innerHTML = `<li style="padding:20px;text-align:center;color:#8696a0;">Нет сохранённых аккаунтов</li>`;
     return;
   }
-
   accounts.forEach(acc => {
     const li = document.createElement("li");
     li.className = "account-row" + (acc.email === currentUser.email ? " current" : "");
     const isCurrent = acc.email === currentUser.email;
     let displayName = acc.name || acc.email.split("@")[0];
-
     li.innerHTML = `
       <div class="avatar">${escapeHtml(displayName.charAt(0).toUpperCase())}</div>
       <div class="info">
@@ -443,10 +1060,7 @@ function renderAccounts() {
 }
 
 document.getElementById("btnAddAccount").addEventListener("click", async () => {
-  const ok = await showConfirm(
-    "Текущий аккаунт будет сохранён. Вы выйдете и войдёте заново с другим аккаунтом.",
-    "Добавить аккаунт?"
-  );
+  const ok = await showConfirm("Текущий аккаунт будет сохранён. Вы выйдете и войдёте заново.", "Добавить аккаунт?");
   if (!ok) return;
   saveCurrentAccount();
   await signOut(auth);
@@ -460,12 +1074,10 @@ async function switchToAccount(acc) {
   try {
     await signOut(auth);
     await signInWithEmailAndPassword(auth, acc.email, password);
-  } catch (e) {
-    showAlert("Не удалось войти: " + e.message, "Ошибка");
-  }
+  } catch (e) { showAlert("Не удалось войти: " + e.message, "Ошибка"); }
 }
 
-// ==== Создание чата ====
+/* ===== СОЗДАНИЕ ЧАТА ===== */
 document.getElementById("btnCreateChat").addEventListener("click", () =>
   document.getElementById("modal-create").classList.add("active"));
 document.getElementById("btnCancel").addEventListener("click", () => {
@@ -498,7 +1110,6 @@ document.getElementById("chatType").addEventListener("change", function () {
   const needSlug = this.value === "group" || this.value === "channel";
   chatSlug.style.display = needSlug ? "block" : "none";
   chatSlugHint.style.display = needSlug ? "block" : "none";
-
   if (this.value === "private") {
     userSelect.style.display = "block"; userSelect.multiple = false;
     channelPublicLabel.style.display = "none";
@@ -538,16 +1149,14 @@ async function createChat() {
   const selected = Array.from(userSelect.selectedOptions).map(o => o.value);
 
   if (!name) return showAlert("Введите название", "Ошибка");
-  if ((type === "private" || type === "group") && selected.length === 0)
-    return showAlert("Выберите хотя бы одного пользователя", "Ошибка");
-  if (type === "private" && selected.length > 1)
-    return showAlert("Приватный чат — только один пользователь", "Ошибка");
+  if ((type === "private" || type === "group") && selected.length === 0) return showAlert("Выберите хотя бы одного", "Ошибка");
+  if (type === "private" && selected.length > 1) return showAlert("Только один пользователь", "Ошибка");
 
   let slug = "";
   if (type === "group" || type === "channel") {
     if (!slugRaw) return showAlert("Введите @юзернейм", "Ошибка");
-    if (!/^[a-z0-9_]{3,20}$/.test(slugRaw)) return showAlert("Юзернейм: только латиница, цифры и _, от 3 до 20", "Ошибка");
-    if (RESERVED_SLUGS.includes(slugRaw)) return showAlert("Этот юзернейм зарезервирован", "Ошибка");
+    if (!/^[a-z0-9_]{3,20}$/.test(slugRaw)) return showAlert("Юзернейм: только латиница, цифры и _", "Ошибка");
+    if (RESERVED_SLUGS.includes(slugRaw)) return showAlert("Зарезервирован", "Ошибка");
     slug = slugRaw;
     const allChats = await get(ref(db, "chats"));
     const chats = allChats.val() || {};
@@ -558,11 +1167,7 @@ async function createChat() {
   selected.forEach(id => members[id] = true);
 
   const newRef = push(ref(db, "chats"));
-  const chatData = {
-    name, type, members, owner: currentUser.uid,
-    description: description || "",
-    photo: chatAvatarBase64 || null
-  };
+  const chatData = { name, type, members, owner: currentUser.uid, description: description || "", photo: chatAvatarBase64 || null };
   if (slug) chatData.slug = slug;
 
   if (type === "channel") {
@@ -574,18 +1179,14 @@ async function createChat() {
       await set(newRef, chatData);
       await set(ref(db, "invites/" + code), newRef.key);
       showInviteLink(code);
-    } else {
-      await set(newRef, chatData);
-    }
+    } else await set(newRef, chatData);
   } else if (type === "private" || type === "group") {
     const code = generateInviteCode();
     chatData.inviteCode = code;
     await set(newRef, chatData);
     await set(ref(db, "invites/" + code), newRef.key);
     showInviteLink(code);
-  } else {
-    await set(newRef, chatData);
-  }
+  } else await set(newRef, chatData);
 
   resetCreateForm();
   document.getElementById("modal-create").classList.remove("active");
@@ -610,7 +1211,6 @@ function generateInviteCode() {
   for (let i = 0; i < 8; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
   return code;
 }
-
 function buildInviteLink(code) {
   const base = window.location.origin + window.location.pathname.replace("chat.html", "");
   return base + "chat.html?join=" + code;
@@ -635,26 +1235,72 @@ function copyToClipboard(text) {
   } else showAlert("Скопируй вручную:\n" + text, "Ссылка");
 }
 
-// ==== Список чатов ====
+/* ===== SKELETON + СПИСОК ===== */
+function showChatSkeleton() {
+  const chatList = document.getElementById("chatList");
+  chatList.innerHTML = "";
+  for (let i = 0; i < 5; i++) {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <div class="skeleton skeleton-avatar"></div>
+      <div style="flex:1;">
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text short"></div>
+      </div>
+    `;
+    chatList.appendChild(li);
+  }
+}
+
+function showEmptyChats() {
+  const chatList = document.getElementById("chatList");
+  chatList.innerHTML = `
+    <div class="empty-state">
+      <div class="emoji">💬</div>
+      <div class="title">У вас ещё нет чатов</div>
+      <div class="sub">Нажмите + внизу, чтобы создать</div>
+    </div>
+  `;
+}
+
+function buildNickHTML(u, baseName) {
+  let html = "";
+  const isPlus = u.isPlus === true && (!u.plusUntil || Date.now() < u.plusUntil);
+  if (isPlus) html += STAR_IMG + " ";
+  if (u.nickColor) html += `<span style="color:${u.nickColor}">${escapeHtml(baseName)}</span>`;
+  else html += escapeHtml(baseName);
+  if (u.nickEmoji) html += ` <span class="nick-emoji">${u.nickEmoji}</span>`;
+  return html;
+}
+
 function loadChats() {
   const chatList = document.getElementById("chatList");
   if (unsubChats) unsubChats();
   unsubChats = onValue(ref(db, "chats"), (snapshot) => {
     const chats = snapshot.val() || {};
     const search = (document.getElementById("searchInput").value || "").toLowerCase();
+    const hasAny = Object.keys(chats).length > 0;
+    if (!hasAny && firstChatsLoad) {
+      showEmptyChats();
+      firstChatsLoad = false;
+      return;
+    }
+    firstChatsLoad = false;
+
     chatList.innerHTML = "";
+    let visibleCount = 0;
     for (const chatId in chats) {
       const chat = chats[chatId];
       const isMember = chat.members && chat.members[currentUser.uid];
       const isPublicChat = chat.type === "public";
       if (!isPublicChat && !isMember) continue;
       if (search && !chat.name.toLowerCase().includes(search)) continue;
+      visibleCount++;
 
       const li = document.createElement("li");
       li.dataset.chatId = chatId;
       const isChannel = chat.type === "channel";
-      const avatarContent = chat.photo
-        ? `<img src="${chat.photo}">`
+      const avatarContent = chat.photo ? `<img src="${chat.photo}">`
         : (isChannel ? "📢" : escapeHtml(chat.name.charAt(0).toUpperCase()));
 
       let subtitle = chat.type;
@@ -666,8 +1312,7 @@ function loadChats() {
         const otherUid = Object.keys(chat.members || {}).find(u => u !== currentUser.uid);
         if (otherUid) {
           const ou = userMap[otherUid] || {};
-          const isActive = ou.isPlus === true && (!ou.plusUntil || Date.now() < ou.plusUntil);
-          if (isActive) nameHTML += ` <span class="plus-star">⭐</span>`;
+          nameHTML = buildNickHTML(ou, ou.name || ou.email || chat.name);
         }
       }
 
@@ -681,40 +1326,33 @@ function loadChats() {
       attachLongPress(li, chatId, chat);
       chatList.appendChild(li);
     }
+    if (visibleCount === 0 && !search) showEmptyChats();
     setTimeout(renderChatListWithBadges, 100);
   });
 }
 document.getElementById("searchInput").addEventListener("input", loadChats);
 
-// ==== Счётчики ====
+/* ===== СЧЁТЧИКИ ===== */
 function loadLastRead() {
   if (unsubLastRead) unsubLastRead();
   try {
     unsubLastRead = onValue(ref(db, "lastRead/" + currentUser.uid), (snap) => {
       lastReadMap = snap.val() || {};
       updateUnreadCounts();
-    }, (err) => {
-      console.warn("lastRead read error:", err.message);
-      lastReadMap = {};
-    });
-  } catch (e) {
-    console.warn("loadLastRead error:", e.message);
-    lastReadMap = {};
-  }
+    }, (err) => { lastReadMap = {}; });
+  } catch (e) { lastReadMap = {}; }
 }
 
 async function updateUnreadCounts() {
   const snap = await get(ref(db, "chats"));
   const chats = snap.val() || {};
   const newCounts = {};
-
   for (const chatId in chats) {
     const chat = chats[chatId];
     const isMember = chat.members && chat.members[currentUser.uid];
     const isPublicChat = chat.type === "public";
     if (!isPublicChat && !isMember) continue;
     if (chatId === currentChatId) continue;
-
     const lastRead = lastReadMap[chatId] || 0;
     const msgsSnap = await get(ref(db, "messages/" + chatId));
     const msgs = msgsSnap.val() || {};
@@ -725,7 +1363,6 @@ async function updateUnreadCounts() {
     }
     if (count > 0) newCounts[chatId] = count;
   }
-
   unreadCounts = newCounts;
   renderChatListWithBadges();
   updateTitle();
@@ -737,13 +1374,10 @@ function renderChatListWithBadges() {
     const chatId = li.dataset.chatId;
     const oldBadge = li.querySelector(".unread-badge");
     if (oldBadge) oldBadge.remove();
-
     const count = unreadCounts[chatId];
     if (!count) return;
-
     const info = li.querySelector(".chat-info");
     if (!info) return;
-
     let topRow = info.querySelector(".chat-top-row");
     if (!topRow) {
       const nameEl = info.querySelector(".chat-name");
@@ -753,7 +1387,6 @@ function renderChatListWithBadges() {
       nameEl.parentNode.insertBefore(topRow, nameEl);
       topRow.appendChild(nameEl);
     }
-
     const badge = document.createElement("div");
     badge.className = "unread-badge";
     badge.textContent = count > 99 ? "99+" : count;
@@ -766,12 +1399,10 @@ function updateTitle() {
   document.title = total > 0 ? `(${total}) Sqwid` : "Sqwid Messenger";
 }
 
-// ==== Слушатель новых сообщений ====
 function listenAllNewMessages() {
   if (unsubAllMessages) unsubAllMessages();
   const selfUid = currentUser.uid;
   msgListenerStart = Date.now();
-
   unsubAllMessages = onChildAdded(ref(db, "messages"), (chatSnap) => {
     const chatId = chatSnap.key;
     onChildAdded(ref(db, "messages/" + chatId), (msgSnap) => {
@@ -780,7 +1411,6 @@ function listenAllNewMessages() {
       if (msg.timestamp < msgListenerStart) return;
       if (msg.sender === selfUid) return;
       if (chatId === currentChatId) return;
-
       unreadCounts[chatId] = (unreadCounts[chatId] || 0) + 1;
       renderChatListWithBadges();
       updateTitle();
@@ -792,11 +1422,9 @@ function listenAllNewMessages() {
   });
 }
 
-// ==== Долгое нажатие ====
+/* ===== ДОЛГОЕ НАЖАТИЕ ===== */
 function attachLongPress(li, chatId, chatData) {
-  let timer = null;
-  let triggered = false;
-
+  let timer = null, triggered = false;
   const start = () => {
     triggered = false;
     li.classList.add("long-press");
@@ -812,7 +1440,6 @@ function attachLongPress(li, chatId, chatData) {
     timer = null;
     li.classList.remove("long-press");
   };
-
   li.addEventListener("touchstart", start, { passive: true });
   li.addEventListener("touchend", cancel);
   li.addEventListener("touchmove", cancel);
@@ -833,7 +1460,6 @@ function showChatActions(chatId, chat) {
   const list = document.getElementById("chatActionsList");
   list.innerHTML = "";
   title.textContent = chat.name || "Чат";
-
   const isOwner = chat.owner === currentUser.uid;
   const isMember = chat.members && chat.members[currentUser.uid];
   const isChannel = chat.type === "channel";
@@ -841,86 +1467,67 @@ function showChatActions(chatId, chat) {
   const isPrivate = chat.type === "private";
   const canDeleteForAll = isOwner && (isChannel || isGroup || isPrivate);
   const canDeleteForMe = isMember || chat.type === "public";
-
   if (canDeleteForAll) {
     const btn = document.createElement("button");
-    btn.className = "action-item danger";
+    btn.className = "action-item danger ripple";
     btn.textContent = "Удалить у всех";
     btn.onclick = () => { hideChatActions(); deleteChatForAll(); };
     list.appendChild(btn);
   }
   if (canDeleteForMe) {
     const btn = document.createElement("button");
-    btn.className = "action-item danger";
+    btn.className = "action-item danger ripple";
     btn.textContent = "Удалить у меня";
     btn.onclick = () => { hideChatActions(); deleteChatForMe(); };
     list.appendChild(btn);
   }
   document.getElementById("modal-chatActions").classList.add("active");
 }
-function hideChatActions() {
-  document.getElementById("modal-chatActions").classList.remove("active");
-}
+function hideChatActions() { document.getElementById("modal-chatActions").classList.remove("active"); }
 document.getElementById("btnChatActionsCancel").addEventListener("click", hideChatActions);
 
 async function deleteChatForMe() {
   if (!pendingDeleteChatId) return;
-  const chatId = pendingDeleteChatId;
   const ok = await showConfirm("Чат исчезнет из вашего списка.", "Удалить у меня?");
   if (!ok) return;
-  await remove(ref(db, "chats/" + chatId + "/members/" + currentUser.uid));
+  await remove(ref(db, "chats/" + pendingDeleteChatId + "/members/" + currentUser.uid));
   pendingDeleteChatId = null;
   pendingDeleteChatData = null;
 }
 
 async function deleteChatForAll() {
   if (!pendingDeleteChatId || !pendingDeleteChatData) return;
-  const chatId = pendingDeleteChatId;
   const chat = pendingDeleteChatData;
   const ok = await showConfirm("Чат будет удалён у всех без возможности восстановления.", "Удалить у всех?");
   if (!ok) return;
   try {
     if (chat.inviteCode) await remove(ref(db, "invites/" + chat.inviteCode));
-    await remove(ref(db, "messages/" + chatId));
-    await remove(ref(db, "chats/" + chatId));
+    await remove(ref(db, "messages/" + pendingDeleteChatId));
+    await remove(ref(db, "chats/" + pendingDeleteChatId));
     pendingDeleteChatId = null;
     pendingDeleteChatData = null;
-    showAlert("Чат удалён у всех участников", "Готово");
-  } catch (e) {
-    showAlert("Ошибка: " + e.message, "Ошибка");
-  }
+    showAlert("Чат удалён у всех", "Готово");
+  } catch (e) { showAlert("Ошибка: " + e.message, "Ошибка"); }
 }
 
-// ==== Открытие чата ====
+/* ===== ОТКРЫТИЕ ЧАТА ===== */
 async function openChat(chatId) {
   const snap = await get(ref(db, "chats/" + chatId));
   const chat = snap.val();
   if (!chat) return;
-
   currentChatId = chatId;
   currentChatData = chat;
-
-  try {
-    await set(ref(db, "lastRead/" + currentUser.uid + "/" + chatId), Date.now());
-  } catch (e) {
-    console.warn("Не удалось сохранить lastRead:", e.message);
-  }
+  try { await set(ref(db, "lastRead/" + currentUser.uid + "/" + chatId), Date.now()); } catch (e) {}
   delete unreadCounts[chatId];
   renderChatListWithBadges();
   updateTitle();
-
   document.getElementById("chatTitle").textContent = chat.name;
   document.getElementById("messages").innerHTML = "";
   document.title = "Sqwid Messenger";
   showScreen("screen-messages");
-
   const inputArea = document.getElementById("inputArea");
-  if (chat.type === "channel" && chat.owner !== currentUser.uid) {
-    inputArea.style.display = "none";
-  } else {
-    inputArea.style.display = "flex";
-  }
-
+  if (chat.type === "channel" && chat.owner !== currentUser.uid) inputArea.style.display = "none";
+  else inputArea.style.display = "flex";
   if (unsubMessages) unsubMessages();
   unsubMessages = onChildAdded(ref(db, "messages/" + chatId), (snapshot) => {
     const msg = snapshot.val();
@@ -933,7 +1540,6 @@ document.getElementById("chatTitle").addEventListener("click", () => {
   if (currentChatId) openChatProfile();
 });
 
-// ==== Профиль чата ====
 function openChatProfile() {
   if (!currentChatData) return;
   try {
@@ -947,7 +1553,6 @@ function openChatProfile() {
       if (chat.type === "channel") photo.classList.add("rounded-square");
       else photo.classList.remove("rounded-square");
     }
-
     document.getElementById("cpName").textContent = chat.name;
     let typeLabel = chat.type;
     if (chat.type === "channel") typeLabel = chat.isPublic ? "публичный канал" : "приватный канал";
@@ -956,7 +1561,6 @@ function openChatProfile() {
     else if (chat.type === "group") typeLabel = "группа";
     if (chat.slug) typeLabel += ` · @${chat.slug}`;
     document.getElementById("cpType").textContent = typeLabel;
-
     document.getElementById("cpDescription").textContent = chat.description || "—";
 
     const linkSection = document.getElementById("cpLinkSection");
@@ -967,9 +1571,7 @@ function openChatProfile() {
     } else if (chat.inviteCode && isOwner) {
       linkSection.style.display = "block";
       document.getElementById("cpInvite").value = buildInviteLink(chat.inviteCode);
-    } else {
-      linkSection.style.display = "none";
-    }
+    } else linkSection.style.display = "none";
 
     const membersDiv = document.getElementById("cpMembers");
     membersDiv.innerHTML = "";
@@ -981,12 +1583,11 @@ function openChatProfile() {
         const u = userMap[uid] || {};
         let name = u.name || u.email || "Пользователь";
         if (u.showUsername !== false && u.username) name = name + " @" + u.username;
-        const isActive = u.isPlus === true && (!u.plusUntil || Date.now() < u.plusUntil);
-        if (isActive) name = "⭐ " + name;
+        const nameHTML = buildNickHTML(u, name);
         const avatarContent = u.photo ? `<img src="${u.photo}">` : escapeHtml(name.charAt(0).toUpperCase());
         const row = document.createElement("div");
         row.className = "cp-member";
-        row.innerHTML = `<div class="cp-member-avatar">${avatarContent}</div><div>${escapeHtml(name)}${uid === chat.owner ? " 👑" : ""}</div>`;
+        row.innerHTML = `<div class="cp-member-avatar">${avatarContent}</div><div>${nameHTML}${uid === chat.owner ? " 👑" : ""}</div>`;
         membersDiv.appendChild(row);
       });
     }
@@ -996,12 +1597,8 @@ function openChatProfile() {
       leaveBtn.style.display = "block";
       leaveBtn.textContent = isOwner ? "Удалить чат" : "Выйти из чата";
     } else leaveBtn.style.display = "none";
-
     showScreen("screen-chat-profile");
-  } catch (e) {
-    console.error("Ошибка в openChatProfile:", e);
-    showAlert("Не удалось открыть профиль: " + e.message, "Ошибка");
-  }
+  } catch (e) { showAlert("Не удалось открыть профиль: " + e.message, "Ошибка"); }
 }
 
 document.getElementById("btnCpCopy").addEventListener("click", () => {
@@ -1013,7 +1610,6 @@ document.getElementById("btnLeaveChat").addEventListener("click", async () => {
   const isOwner = currentChatData.owner === currentUser.uid;
   const ok = await showConfirm(isOwner ? "Удалить чат для всех?" : "Выйти из чата?", isOwner ? "Удалить чат" : "Выйти");
   if (!ok) return;
-
   const chatId = currentChatId;
   if (isOwner) {
     if (currentChatData.inviteCode) await remove(ref(db, "invites/" + currentChatData.inviteCode));
@@ -1027,7 +1623,7 @@ document.getElementById("btnLeaveChat").addEventListener("click", async () => {
   showScreen("screen-chats");
 });
 
-// ==== Рендер сообщения ====
+/* ===== СООБЩЕНИЯ ===== */
 function renderMessage(msg) {
   const msgDiv = document.getElementById("messages");
   const isOwn = msg.sender === currentUser.uid;
@@ -1036,13 +1632,9 @@ function renderMessage(msg) {
   const sender = userMap[msg.sender] || {};
 
   let senderName = sender.name || sender.email || "Пользователь";
-  if (sender.showUsername !== false && sender.username) {
-    senderName = sender.name + " @" + sender.username;
-  }
-  const isSenderPlus = sender.isPlus === true && (!sender.plusUntil || Date.now() < sender.plusUntil);
-  if (isSenderPlus) senderName = "⭐ " + senderName;
+  if (sender.showUsername !== false && sender.username) senderName = sender.name + " @" + sender.username;
+  const senderHTML = buildNickHTML(sender, senderName);
 
-  // Дата-разделитель
   const dateLabel = formatDate(msgDate);
   const lastChild = msgDiv.lastElementChild;
   if (!lastChild || lastChild.dataset.dateLabel !== dateLabel) {
@@ -1059,46 +1651,33 @@ function renderMessage(msg) {
 
   let replyHTML = "";
   if (msg.replyTo) {
-    replyHTML = `
-      <div class="msg-reply">
-        <div class="msg-reply-name">${escapeHtml(msg.replyTo.senderName || "")}</div>
-        <div class="msg-reply-text">${escapeHtml(msg.replyTo.text || "")}</div>
-      </div>
-    `;
+    replyHTML = `<div class="msg-reply"><div class="msg-reply-name">${escapeHtml(msg.replyTo.senderName || "")}</div><div class="msg-reply-text">${escapeHtml(msg.replyTo.text || "")}</div></div>`;
   }
 
   let content = "";
-  if (msg.type === "photo" && msg.photo) {
-    content = `<img class="msg-photo" src="${msg.photo}" alt="фото">`;
-  } else {
-    content = `<div>${escapeHtml(msg.text || "")}</div>`;
-  }
+  if (msg.type === "photo" && msg.photo) content = `<img class="msg-photo" src="${msg.photo}" alt="фото">`;
+  else content = `<div>${escapeHtml(msg.text || "")}</div>`;
 
   div.innerHTML = `
     <div class="msg-reply-icon">↩</div>
-    ${!isOwn ? `<div class="sender">${escapeHtml(senderName)}</div>` : ""}
+    ${!isOwn ? `<div class="sender">${senderHTML}</div>` : ""}
     ${replyHTML}
     ${content}
     <div class="time">${time}</div>
   `;
 
   const img = div.querySelector(".msg-photo");
-  if (img) {
-    img.addEventListener("click", () => {
-      document.getElementById("photoViewerImg").src = msg.photo;
-      document.getElementById("photoViewer").classList.add("active");
-    });
-  }
+  if (img) img.addEventListener("click", () => {
+    document.getElementById("photoViewerImg").src = msg.photo;
+    document.getElementById("photoViewer").classList.add("active");
+  });
 
   attachSwipeReply(div, msg, senderName);
   msgDiv.appendChild(div);
   msgDiv.scrollTop = msgDiv.scrollHeight;
 }
 
-function formatTime(d) {
-  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-}
-
+function formatTime(d) { return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); }
 function formatDate(d) {
   const today = new Date();
   const yesterday = new Date();
@@ -1109,41 +1688,33 @@ function formatDate(d) {
   return d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
 }
 
-// ==== Свайп-ответ ====
 function attachSwipeReply(div, msg, senderName) {
   const isOwn = msg.sender === currentUser.uid;
-  let startX = 0;
-  let currentX = 0;
-  let swiping = false;
+  let startX = 0, currentX = 0, swiping = false;
   const threshold = 70;
-
   div.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
     currentX = startX;
     swiping = true;
     div.classList.add("swiping");
   }, { passive: true });
-
   div.addEventListener("touchmove", (e) => {
     if (!swiping) return;
     currentX = e.touches[0].clientX;
     let delta = currentX - startX;
     if (isOwn && delta < 0) delta = 0;
     if (!isOwn && delta > 0) delta = 0;
-    const max = 90;
-    if (delta > max) delta = max;
-    if (delta < -max) delta = -max;
+    if (delta > 90) delta = 90;
+    if (delta < -90) delta = -90;
     div.style.transform = `translateX(${delta}px)`;
     if (Math.abs(delta) > threshold) div.classList.add("reply-trigger");
     else div.classList.remove("reply-trigger");
   });
-
   div.addEventListener("touchend", () => {
     if (!swiping) return;
     swiping = false;
     div.classList.remove("swiping");
-    const delta = currentX - startX;
-    const absDelta = Math.abs(delta);
+    const absDelta = Math.abs(currentX - startX);
     div.style.transform = "";
     div.classList.remove("reply-trigger");
     if (absDelta > threshold) {
@@ -1151,7 +1722,6 @@ function attachSwipeReply(div, msg, senderName) {
       setReplyTo(msg, senderName);
     }
   });
-
   div.addEventListener("touchcancel", () => {
     swiping = false;
     div.classList.remove("swiping", "reply-trigger");
@@ -1160,12 +1730,8 @@ function attachSwipeReply(div, msg, senderName) {
 }
 
 function setReplyTo(msg, senderName) {
-  replyTo = {
-    msgId: msg.id,
-    text: msg.type === "photo" ? "📷 Фото" : (msg.text || ""),
-    senderName: senderName || "Пользователь"
-  };
-  document.getElementById("replyPreviewName").textContent = replyTo.senderName;
+  replyTo = { msgId: msg.id, text: msg.type === "photo" ? "📷 Фото" : (msg.text || ""), senderName: senderName || "Пользователь" };
+  document.getElementById("replyPreviewName").textContent = replyTo.senderName.replace(/<[^>]*>/g, "");
   document.getElementById("replyPreviewText").textContent = replyTo.text;
   document.getElementById("replyPreview").classList.add("active");
   document.getElementById("msgInput").focus();
@@ -1196,14 +1762,12 @@ function svgAvatar(text) {
       ch + '</text></svg>';
     return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
   } catch (e) {
-    console.error("svgAvatar error:", e);
     return "data:image/svg+xml;utf8," + encodeURIComponent(
       '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="100%" height="100%" fill="#00a884"/></svg>'
     );
   }
 }
 
-// ==== Отправка ====
 async function sendMessage() {
   const input = document.getElementById("msgInput");
   const text = input.value.trim();
@@ -1212,25 +1776,20 @@ async function sendMessage() {
     showAlert("В этом канале может писать только владелец", "Ошибка");
     return;
   }
-
   const data = { sender: currentUser.uid, type: "text", text, timestamp: Date.now() };
   if (replyTo) data.replyTo = { msgId: replyTo.msgId, text: replyTo.text, senderName: replyTo.senderName };
-
   await push(ref(db, "messages/" + currentChatId), data);
   input.value = "";
   replyTo = null;
   document.getElementById("replyPreview").classList.remove("active");
 }
 document.getElementById("btnSend").addEventListener("click", sendMessage);
-document.getElementById("msgInput").addEventListener("keydown", e => {
-  if (e.key === "Enter") sendMessage();
-});
+document.getElementById("msgInput").addEventListener("keydown", e => { if (e.key === "Enter") sendMessage(); });
 
-// ==== Отправка фото ====
 document.getElementById("btnAttach").addEventListener("click", () => {
   if (!currentChatId) return showAlert("Откройте чат", "Ошибка");
   if (currentChatData.type === "channel" && currentChatData.owner !== currentUser.uid) {
-    return showAlert("В этом канале может писать только владелец", "Ошибка");
+    return showAlert("Только владелец может писать в канал", "Ошибка");
   }
   document.getElementById("fileInput").click();
 });
@@ -1239,15 +1798,13 @@ document.getElementById("fileInput").addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file) return;
   e.target.value = "";
-
   if (!file.type.startsWith("image/")) return showAlert("Только изображения", "Ошибка");
   const maxSize = isPlusActive() ? 2 * 1024 * 1024 : 500 * 1024;
   const limitText = isPlusActive() ? "2 МБ" : "500 КБ";
   if (file.size > maxSize) {
-    if (!isPlusActive()) return showAlert(`Фото больше ${limitText}.\n\nОформите Sqwid+ ⭐ — там лимит 2 МБ.`, "Лимит");
+    if (!isPlusActive()) return showAlert(`Фото больше ${limitText}.\n\nОформите Sqwid+`, "Лимит");
     return showAlert(`Фото больше ${limitText}`, "Лимит");
   }
-
   const reader = new FileReader();
   reader.onload = async (ev) => {
     const data = { sender: currentUser.uid, type: "photo", photo: ev.target.result, timestamp: Date.now() };
@@ -1264,7 +1821,7 @@ document.getElementById("photoViewer").addEventListener("click", () => {
   document.getElementById("photoViewerImg").src = "";
 });
 
-// ==== Ссылка ====
+/* ===== ССЫЛКИ ===== */
 async function checkInvite() {
   const params = new URLSearchParams(window.location.search);
   const code = params.get("join");
@@ -1284,13 +1841,9 @@ async function checkInvite() {
       }
       window.history.replaceState({}, "", "chat.html");
       await openChat(chatId);
-    } catch (err) {
-      console.error(err);
-      showAlert("Ошибка ссылки", "Ошибка");
-    }
+    } catch (err) { showAlert("Ошибка ссылки", "Ошибка"); }
     return;
   }
-
   const slug = params.get("g");
   if (slug) {
     try {
@@ -1307,14 +1860,11 @@ async function checkInvite() {
       currentChatId = foundChatId;
       currentChatData = chats[foundChatId];
       openChatProfile();
-    } catch (err) {
-      console.error(err);
-      showAlert("Ошибка ссылки", "Ошибка");
-    }
+    } catch (err) { showAlert("Ошибка ссылки", "Ошибка"); }
   }
 }
 
-// ==== Поиск ====
+/* ===== ПОИСК ===== */
 document.getElementById("btnSearchUsers").addEventListener("click", () => {
   document.getElementById("userSearchInput").value = "";
   document.getElementById("userSearchList").innerHTML = "";
@@ -1352,19 +1902,18 @@ function renderPeopleSearch(q) {
     if (uid === currentUser.uid) continue;
     const u = userMap[uid] || {};
     const name = (u.name || "").toLowerCase();
-    const username = (u.username || "").toLowerCase();
     const email = (u.email || "").toLowerCase();
-    if (!name.includes(q) && !username.includes(q) && !email.includes(q)) continue;
-
+    const uname = (u.username || "").toLowerCase();
+    if (!name.includes(q) && !email.includes(q) && !uname.includes(q)) continue;
     const li = document.createElement("li");
     li.className = "user-result";
     const avatarContent = u.photo ? `<img src="${u.photo}">` : escapeHtml((u.name || "?").charAt(0).toUpperCase());
     let displayName = u.name || u.email || "Пользователь";
     let subText = "";
     if (u.showUsername !== false && u.username) subText = "@" + u.username;
-
-    li.innerHTML = `<div class="avatar">${avatarContent}</div><div class="info"><div class="name">${escapeHtml(displayName)}</div>${subText ? `<div class="username">${escapeHtml(subText)}</div>` : ""}</div>`;
-    li.onclick = () => startPrivateChatWith(uid, displayName);
+    const nameHTML = buildNickHTML(u, displayName);
+    li.innerHTML = `<div class="avatar">${avatarContent}</div><div class="info"><div class="name">${nameHTML}</div>${subText ? `<div class="username">${escapeHtml(subText)}</div>` : ""}</div>`;
+    li.onclick = () => showUserProfile(uid, u);
     list.appendChild(li);
   }
 }
@@ -1383,13 +1932,12 @@ async function renderChatsSearch(q) {
     const nameMatch = chat.name.toLowerCase().includes(q);
     const slugMatch = (chat.slug || "").toLowerCase().includes(q);
     if (!nameMatch && !slugMatch) continue;
-
     const li = document.createElement("li");
     li.className = "user-result";
     const avatarContent = chat.photo ? `<img src="${chat.photo}">` : escapeHtml(chat.name.charAt(0).toUpperCase());
     let subtitle = chat.type === "channel" ? "канал" : "группа";
     if (chat.slug) subtitle += ` · @${chat.slug}`;
-    li.innerHTML = `<div class="avatar">${avatarContent}</div><div class="info"><div class="name">${escapeHtml(chat.name)}</div><div class="username">${subtitle}</div></div><button class="join-btn" data-chat-id="${chatId}">Войти</button>`;
+    li.innerHTML = `<div class="avatar">${avatarContent}</div><div class="info"><div class="name">${escapeHtml(chat.name)}</div><div class="username">${subtitle}</div></div><button class="join-btn ripple" data-chat-id="${chatId}">Войти</button>`;
     li.querySelector(".join-btn").addEventListener("click", async (e) => { e.stopPropagation(); await joinChat(chatId); });
     list.appendChild(li);
   }
@@ -1398,7 +1946,7 @@ async function renderChatsSearch(q) {
 
 async function joinChat(chatId) {
   await update(ref(db, "chats/" + chatId + "/members"), { [currentUser.uid]: true });
-  showAlert("Вы присоединились к чату!", "Готово");
+  showAlert("Вы присоединились!", "Готово");
   document.getElementById("chatSearchList").innerHTML = "";
   document.getElementById("userSearchInput").value = "";
   openChat(chatId);
@@ -1426,7 +1974,7 @@ async function startPrivateChatWith(uid, displayName) {
   }
 }
 
-// ==== Sqwid+ ====
+/* ===== SQWID+ ===== */
 document.getElementById("btnSqwidPlus").addEventListener("click", () => {
   document.getElementById("profileMenu").classList.remove("active");
   showScreen("screen-plus");
@@ -1446,7 +1994,7 @@ function openBot() {
   const periodText = selectedTariff === "1" ? "1 месяц" : selectedTariff === "3" ? "3 месяца" : "6 месяцев";
   const welcome = document.createElement("div");
   welcome.className = "msg other";
-  welcome.innerHTML = `<div class="sender">@sqwid</div><div>Здравствуйте! Я бот Sqwid.</div><div>Вы выбрали тариф: <b>${periodText}</b></div><div style="margin-top:8px;">Нажмите кнопку ниже.</div><button class="bot-start-btn" id="botStartBtn">▶ Старт</button>`;
+  welcome.innerHTML = `<div class="sender">@sqwid</div><div>Здравствуйте! Я бот Sqwid.</div><div>Вы выбрали тариф: <b>${periodText}</b></div><div style="margin-top:8px;">Нажмите кнопку.</div><button class="bot-start-btn ripple" id="botStartBtn">▶ Старт</button>`;
   msgDiv.appendChild(welcome);
   document.getElementById("botStartBtn").addEventListener("click", showBotInstructions);
   showScreen("screen-bot");
@@ -1459,7 +2007,7 @@ function showBotInstructions() {
   const periodText = selectedTariff === "1" ? "1 месяц" : selectedTariff === "3" ? "3 месяца" : "6 месяцев";
   const instruction = document.createElement("div");
   instruction.className = "msg other";
-  instruction.innerHTML = `<div class="sender">@sqwid</div><div>Для получения премиума на <b>${periodText}</b> напиши мне:<br><br><b style="color:#f7b500;font-size:16px;">@sqwid</b><br><br>После договора вы получите свой Sqwid+ 🎉</div><div class="bot-message-buttons"><button class="bot-btn" id="botBtnWrite">Написать</button><button class="bot-btn secondary" id="botBtnChange">Выбрать другой тариф</button></div>`;
+  instruction.innerHTML = `<div class="sender">@sqwid</div><div>Для получения премиума на <b>${periodText}</b> напиши:<br><br><b style="color:#f7b500;font-size:16px;">@sqwid</b><br><br>После договора вы получите Sqwid+ 🎉</div><div class="bot-message-buttons"><button class="bot-btn ripple" id="botBtnWrite">Написать</button><button class="bot-btn secondary ripple" id="botBtnChange">Другой тариф</button></div>`;
   msgDiv.appendChild(instruction);
   msgDiv.scrollTop = msgDiv.scrollHeight;
   document.getElementById("botBtnWrite").addEventListener("click", () => {
@@ -1494,16 +2042,30 @@ async function sendBotMessage() {
   }
 }
 
-// ==== Админ ====
+/* ===== АДМИН ===== */
 document.getElementById("btnAdminPanel").addEventListener("click", () => {
   document.getElementById("profileMenu").classList.remove("active");
   document.getElementById("adminSearch").value = "";
+  document.getElementById("adminSearchCoins").value = "";
   renderAdminUsers("");
+  renderAdminCoins("");
   showScreen("screen-admin");
+});
+
+document.querySelectorAll(".admin-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".admin-tab").forEach(t => t.classList.toggle("active", t === tab));
+    const target = tab.dataset.tab;
+    document.getElementById("adminTabPlus").style.display = target === "plus" ? "block" : "none";
+    document.getElementById("adminTabCoins").style.display = target === "coins" ? "block" : "none";
+  });
 });
 
 document.getElementById("adminSearch").addEventListener("input", (e) => {
   renderAdminUsers(e.target.value.trim().toLowerCase());
+});
+document.getElementById("adminSearchCoins").addEventListener("input", (e) => {
+  renderAdminCoins(e.target.value.trim().toLowerCase());
 });
 
 function renderAdminUsers(query) {
@@ -1513,10 +2075,9 @@ function renderAdminUsers(query) {
     if (uid === currentUser.uid) continue;
     const u = userMap[uid] || {};
     const name = (u.name || "").toLowerCase();
-    const username = (u.username || "").toLowerCase();
     const email = (u.email || "").toLowerCase();
-    if (query && !name.includes(query) && !username.includes(query) && !email.includes(query)) continue;
-
+    const uname = (u.username || "").toLowerCase();
+    if (query && !name.includes(query) && !email.includes(query) && !uname.includes(query)) continue;
     const li = document.createElement("li");
     li.className = "admin-user-row";
     const avatarContent = u.photo ? `<img src="${u.photo}">` : escapeHtml((u.name || "?").charAt(0).toUpperCase());
@@ -1524,9 +2085,31 @@ function renderAdminUsers(query) {
     let subText = "";
     if (u.username) subText = "@" + u.username;
     const isActivePlus = u.isPlus === true && (!u.plusUntil || Date.now() < u.plusUntil);
-    const badge = isActivePlus ? `<div class="plus-badge">⭐</div>` : "";
+    const badge = isActivePlus ? `<div class="plus-badge">${STAR_IMG}</div>` : "";
     li.innerHTML = `<div class="avatar">${avatarContent}</div><div class="info"><div class="name">${escapeHtml(displayName)}</div>${subText ? `<div class="username">${escapeHtml(subText)}</div>` : ""}</div>${badge}`;
-    li.onclick = () => openGivePlusModal(uid, displayName, u.username, isActivePlus);
+    li.onclick = () => openGivePlusModal(uid, displayName, u.username || "", isActivePlus);
+    list.appendChild(li);
+  }
+  if (list.children.length === 0) list.innerHTML = `<li style="padding:20px;text-align:center;color:#8696a0;">Никого не найдено</li>`;
+}
+
+function renderAdminCoins(query) {
+  const list = document.getElementById("adminCoinsList");
+  list.innerHTML = "";
+  for (const uid in userMap) {
+    if (uid === currentUser.uid) continue;
+    const u = userMap[uid] || {};
+    const name = (u.name || "").toLowerCase();
+    const email = (u.email || "").toLowerCase();
+    const uname = (u.username || "").toLowerCase();
+    if (query && !name.includes(query) && !email.includes(query) && !uname.includes(query)) continue;
+    const li = document.createElement("li");
+    li.className = "admin-user-row";
+    const avatarContent = u.photo ? `<img src="${u.photo}">` : escapeHtml((u.name || "?").charAt(0).toUpperCase());
+    let displayName = u.name || u.email || "Пользователь";
+    const coins = u.coins || 0;
+    li.innerHTML = `<div class="avatar">${avatarContent}</div><div class="info"><div class="name">${escapeHtml(displayName)}</div></div><div class="coins-badge">🪙 ${coins}</div>`;
+    li.onclick = () => openGiveCoinsModal(uid, displayName, coins);
     list.appendChild(li);
   }
   if (list.children.length === 0) list.innerHTML = `<li style="padding:20px;text-align:center;color:#8696a0;">Никого не найдено</li>`;
@@ -1539,7 +2122,7 @@ function openGivePlusModal(uid, name, username, isActivePlus) {
   const info = document.getElementById("givePlusUser");
   let text = `Пользователь: ${name}`;
   if (username) text += ` (@${username})`;
-  if (isActivePlus) text += "\n⭐ Уже имеет активный Sqwid+";
+  if (isActivePlus) text += "\n★ Уже имеет активный Sqwid+";
   info.textContent = text;
   document.querySelectorAll(".give-plus-option").forEach(btn => {
     btn.style.borderColor = "#2a3942";
@@ -1583,6 +2166,39 @@ document.getElementById("btnGivePlusConfirm").addEventListener("click", async ()
   showAlert(`Sqwid+ выдан: ${pendingGivePlusName}\nСрок: ${pendingGivePlusPeriod} мес.`, "Готово");
   pendingGivePlusUid = null;
   pendingGivePlusPeriod = null;
+});
+
+function openGiveCoinsModal(uid, name, coins) {
+  pendingGiveCoinsUid = uid;
+  pendingGiveCoinsName = name;
+  document.getElementById("giveCoinsUser").textContent = "Пользователь: " + name;
+  document.getElementById("giveCoinsCurrent").textContent = "Текущий баланс: 🪙 " + coins + " SQ";
+  document.getElementById("giveCoinsAmount").value = 100;
+  document.getElementById("modal-giveCoins").classList.add("active");
+}
+
+document.getElementById("btnGiveCoinsCancel").addEventListener("click", () => {
+  document.getElementById("modal-giveCoins").classList.remove("active");
+  pendingGiveCoinsUid = null;
+});
+
+document.getElementById("btnGiveCoinsConfirm").addEventListener("click", async () => {
+  if (!pendingGiveCoinsUid) return;
+  const amount = parseInt(document.getElementById("giveCoinsAmount").value);
+  if (isNaN(amount) || amount === 0) return showAlert("Введи число, не равное 0", "Ошибка");
+
+  const userSnap = await get(ref(db, "users/" + pendingGiveCoinsUid));
+  const u = userSnap.val() || {};
+  const currentCoins = u.coins || 0;
+  const newCoins = currentCoins + amount;
+
+  if (newCoins < 0) return showAlert("Нельзя уйти в минус. Текущий баланс: " + currentCoins, "Ошибка");
+
+  await update(ref(db, "users/" + pendingGiveCoinsUid), { coins: newCoins });
+  document.getElementById("modal-giveCoins").classList.remove("active");
+  const action = amount > 0 ? "Выдано" : "Списано";
+  showAlert(`${action}: ${Math.abs(amount)} SQ\nПользователь: ${pendingGiveCoinsName}\nНовый баланс: 🪙 ${newCoins} SQ`, "Готово");
+  pendingGiveCoinsUid = null;
 });
 
 function isPlusActive() {

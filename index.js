@@ -37,24 +37,11 @@ const statusText = document.getElementById("status");
 
 let avatarBase64 = null;
 
-// Показываем поля имени/фото, когда пользователь начинает регистрацию
-document.getElementById("btnRegister").addEventListener("focus", () => {
-  registerFields.style.display = "block";
-});
-
-// Показываем поля по первому клику на "Зарегистрироваться"
-let registerMode = false;
-function enableRegisterMode() {
-  registerMode = true;
-  registerFields.style.display = "block";
-}
-
-// Просмотр выбранного фото
 avatarInput.addEventListener("change", () => {
   const file = avatarInput.files[0];
   if (!file) return;
   if (file.size > 500 * 1024) {
-    alert("Фото слишком большое. Выберите до 500 КБ");
+    statusText.innerText = "Фото до 500 КБ";
     return;
   }
   const reader = new FileReader();
@@ -71,11 +58,8 @@ onAuthStateChanged(auth, (user) => {
   if (user) window.location.href = "chat.html";
 });
 
-// === Регистрация ===
 async function register() {
-  registerMode = true;
   registerFields.style.display = "block";
-
   const email = emailInput.value.trim();
   const password = passwordInput.value;
   const name = usernameInput.value.trim() || email.split("@")[0];
@@ -90,7 +74,6 @@ async function register() {
   }
 
   statusText.innerText = "Регистрируем...";
-
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     await set(ref(db, "users/" + cred.user.uid), {
@@ -105,17 +88,14 @@ async function register() {
   }
 }
 
-// === Вход ===
 async function login() {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
-
   if (!email || !password) {
     statusText.innerText = "Заполните email и пароль";
     return;
   }
   statusText.innerText = "Входим...";
-
   try {
     await signInWithEmailAndPassword(auth, email, password);
     window.location.href = "chat.html";
@@ -124,7 +104,6 @@ async function login() {
   }
 }
 
-// === Сброс пароля ===
 async function resetPassword() {
   const email = emailInput.value.trim();
   if (!email) {
@@ -133,7 +112,7 @@ async function resetPassword() {
   }
   try {
     await sendPasswordResetEmail(auth, email);
-    statusText.innerText = "Письмо отправлено. Проверьте папку «Спам», если не видите входящее";
+    statusText.innerText = "Письмо отправлено. Проверьте «Спам»";
   } catch (error) {
     statusText.innerText = translateError(error.code);
   }

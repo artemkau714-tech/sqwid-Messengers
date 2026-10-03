@@ -9,24 +9,20 @@
 </head>
 <body>
 
-  <!-- Экран 1: Список чатов -->
   <div id="screen-chats" class="screen active">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBurger">☰</button>
+      <button class="icon-btn ripple" id="btnBurger">☰</button>
       <h1>Чаты</h1>
-      <button class="icon-btn" id="btnSearchUsers">🔍</button>
+      <button class="icon-btn ripple" id="btnSearchUsers">🔍</button>
     </header>
-    <div class="search-bar">
-      <input id="searchInput" placeholder="Поиск чатов...">
-    </div>
+    <div class="search-bar"><input id="searchInput" placeholder="Поиск чатов..."></div>
     <ul id="chatList" class="chat-list"></ul>
-    <button class="fab" id="btnCreateChat">+</button>
+    <button class="fab ripple" id="btnCreateChat">+</button>
   </div>
 
-  <!-- Экран 2: Открытый чат -->
   <div id="screen-messages" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBack">←</button>
+      <button class="icon-btn ripple" id="btnBack">←</button>
       <h1 id="chatTitle" class="clickable-title">Чат</h1>
     </header>
     <div id="messages" class="messages"></div>
@@ -35,20 +31,19 @@
         <div class="reply-preview-name" id="replyPreviewName">Имя</div>
         <div class="reply-preview-text" id="replyPreviewText">Текст</div>
       </div>
-      <button class="reply-preview-close" id="btnCancelReply">✕</button>
+      <button class="reply-preview-close ripple" id="btnCancelReply">✕</button>
     </div>
     <div class="input-area" id="inputArea">
-      <button class="attach-btn" id="btnAttach">📎</button>
+      <button class="attach-btn ripple" id="btnAttach">📎</button>
       <input type="file" id="fileInput" accept="image/*" style="display:none;">
       <input id="msgInput" placeholder="Сообщение...">
-      <button class="send-btn" id="btnSend">➤</button>
+      <button class="send-btn ripple" id="btnSend">➤</button>
     </div>
   </div>
 
-  <!-- Экран 3: Профиль чата -->
   <div id="screen-chat-profile" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackProfile">←</button>
+      <button class="icon-btn ripple" id="btnBackProfile">←</button>
       <h1>Информация</h1>
     </header>
     <div class="chat-profile-body">
@@ -62,189 +57,325 @@
       <div class="cp-section" id="cpLinkSection" style="display:none;">
         <div class="cp-label">Ссылка на чат</div>
         <input id="cpInvite" readonly class="cp-link-input">
-        <button class="btn-create" id="btnCpCopy" style="margin-top:8px;">Копировать ссылку</button>
+        <button class="btn-create ripple" id="btnCpCopy" style="margin-top:8px;">Копировать ссылку</button>
       </div>
       <div class="cp-section">
         <div class="cp-label">Участники</div>
         <div id="cpMembers" class="cp-members">—</div>
       </div>
-      <button class="menu-item danger" id="btnLeaveChat" style="margin-top:20px;">Выйти из чата</button>
+      <button class="menu-item danger ripple" id="btnLeaveChat" style="margin-top:20px;">Выйти из чата</button>
     </div>
   </div>
 
-  <!-- Экран 4: Настройки -->
+  <div id="screen-my-profile" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn ripple" id="btnBackMyProfile">←</button>
+      <h1>Мой профиль</h1>
+      <button class="icon-btn ripple" id="btnShareProfile">🔗</button>
+    </header>
+    <div class="my-profile-body">
+      <img id="mpPhoto" class="mp-photo" alt="">
+      <h2 id="mpName">Имя</h2>
+      <p id="mpUsername" class="mp-username">@username</p>
+      <p id="mpBio" class="mp-bio">—</p>
+      <div class="mp-coins" id="mpCoins">🪙 0 SQ</div>
+      <div class="mp-stats">
+        <div class="mp-stat"><div class="mp-stat-value" id="mpStatChats">0</div><div class="mp-stat-label">Чатов</div></div>
+        <div class="mp-stat"><div class="mp-stat-value" id="mpStatMessages">0</div><div class="mp-stat-label">Сообщений</div></div>
+        <div class="mp-stat"><div class="mp-stat-value" id="mpStatPhotos">0</div><div class="mp-stat-label">Фото</div></div>
+      </div>
+      <button class="btn-create ripple" id="btnEditProfile" style="width:100%;margin-top:20px;">✏️ Редактировать профиль</button>
+      <button class="menu-item ripple" id="btnOpenShop" style="background:#1f2c34;border-radius:12px;margin-top:10px;color:#f7b500;">
+        🛍 Магазин
+      </button>
+      <button class="menu-item ripple" id="btnMySqwidPlus" style="background:#1f2c34;border-radius:12px;margin-top:10px;color:#f7b500;">
+        <img src="sqwidstar.png" class="plus-inline-icon" alt=""> Sqwid+
+      </button>
+    </div>
+  </div>
+
   <div id="screen-settings" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackSettings">←</button>
+      <button class="icon-btn ripple" id="btnBackSettings">←</button>
       <h1>Настройки</h1>
-      <button class="icon-btn" id="btnSaveSettings" style="color:#00a884;font-size:22px;">✓</button>
+      <button class="icon-btn ripple" id="btnSaveSettings" style="color:#00a884;font-size:22px;">✓</button>
     </header>
     <div class="settings-body">
-      <div class="settings-avatar-wrap">
-        <img id="settingsPhoto" class="settings-photo" alt="">
-        <label class="btn-change-avatar">
-          <input id="settingsAvatarInput" type="file" accept="image/*" style="display:none;">
-          Сменить аватар
-        </label>
-      </div>
-      <div class="settings-field">
-        <label>Имя</label>
-        <input id="settingsName" maxlength="30" placeholder="Ваше имя">
-      </div>
-      <div class="settings-field">
-        <label>Ник (@username)</label>
-        <input id="settingsUsername" maxlength="20" placeholder="username">
-        <div class="settings-hint">Только латиница, цифры и _ . От 3 до 20 символов</div>
-      </div>
-      <div class="settings-field">
-        <label>Описание</label>
-        <textarea id="settingsBio" maxlength="120" rows="3" placeholder="О себе"></textarea>
-      </div>
-      <div class="settings-field">
-        <label>Почта</label>
-        <div class="settings-email-row">
-          <span id="settingsEmail">—</span>
-          <button id="btnToggleEmailSettings" class="btn-toggle">Скрыть</button>
+      <div class="settings-section">
+        <div class="settings-section-title">Профиль</div>
+        <div class="settings-card">
+          <div class="settings-avatar-wrap">
+            <img id="settingsPhoto" class="settings-photo" alt="">
+            <label class="btn-change-avatar ripple">
+              <input id="settingsAvatarInput" type="file" accept="image/*" style="display:none;">
+              Сменить аватар
+            </label>
+          </div>
+          <div class="settings-field"><label>Имя</label><input id="settingsName" maxlength="30" placeholder="Ваше имя"></div>
+          <div class="settings-field">
+            <label>Юзернейм (@username)</label>
+            <input id="settingsUsername" maxlength="20" placeholder="username">
+            <div class="settings-hint">Латиница, цифры и _ . От 3 до 20 символов. Премиум-ники — только через магазин.</div>
+          </div>
+          <div class="settings-field"><label>Описание</label><textarea id="settingsBio" maxlength="120" rows="3" placeholder="О себе"></textarea></div>
         </div>
       </div>
-      <div class="settings-field">
-        <label class="settings-toggle-row">
-          <input type="checkbox" id="settingsShowUsername">
-          <span>Показывать юзернейм другим</span>
-        </label>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Приватность</div>
+        <div class="settings-card">
+          <div class="settings-field">
+            <label>Почта</label>
+            <div class="settings-email-row">
+              <span id="settingsEmail">—</span>
+              <button id="btnToggleEmailSettings" class="btn-toggle ripple">Скрыть</button>
+            </div>
+          </div>
+          <div class="settings-field">
+            <label class="settings-toggle-row">
+              <input type="checkbox" id="settingsShowUsername">
+              <span>Показывать юзернейм другим</span>
+            </label>
+          </div>
+          <div class="settings-field">
+            <label class="settings-toggle-row">
+              <input type="checkbox" id="settingsHideOnline">
+              <span>Скрывать статус «в сети»</span>
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="settings-field">
-        <button class="menu-item" id="btnMemory" style="background:#1f2c34;border-radius:10px;">💾 Память</button>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Внешний вид</div>
+        <div class="settings-card">
+          <div class="settings-field">
+            <label>Цвет акцента <span class="plus-badge-small">Sqwid+</span></label>
+            <div class="theme-picker" id="themePicker">
+              <button class="theme-swatch ripple" data-theme="green" style="background:#00a884;"></button>
+              <button class="theme-swatch ripple" data-theme="blue" style="background:#3b82f6;"></button>
+              <button class="theme-swatch ripple" data-theme="purple" style="background:#a855f7;"></button>
+              <button class="theme-swatch ripple" data-theme="orange" style="background:#f97316;"></button>
+              <button class="theme-swatch ripple" data-theme="red" style="background:#ef4444;"></button>
+              <button class="theme-swatch ripple" data-theme="pink" style="background:#ec4899;"></button>
+            </div>
+            <div class="settings-hint">Доступно только пользователям Sqwid+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Данные</div>
+        <div class="settings-card">
+          <button class="menu-item ripple" id="btnMemory" style="background:none;padding:12px 0;">💾 Память</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">О приложении</div>
+        <div class="settings-card">
+          <button class="menu-item ripple" id="btnAboutFromSettings" style="background:none;padding:12px 0;">ℹ️ О Sqwid Messenger</button>
+          <div class="settings-info-row"><span>Версия</span><span style="color:#8696a0;">1.0.0</span></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Экран 5: Память -->
   <div id="screen-memory" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackMemory">←</button>
+      <button class="icon-btn ripple" id="btnBackMemory">←</button>
       <h1>Память</h1>
     </header>
     <div class="settings-body">
-      <div class="settings-field">
-        <label>Всего в базе</label>
-        <div class="settings-email-row"><span id="memoryTotal">—</span></div>
+      <div class="settings-field"><label>Всего в базе</label><div class="settings-email-row"><span id="memoryTotal">—</span></div></div>
+      <div class="settings-field"><label>Фотографии</label><div class="settings-email-row"><span id="memoryPhotos">—</span></div></div>
+      <div class="settings-field"><label>Текстовые сообщения</label><div class="settings-email-row"><span id="memoryTexts">—</span></div></div>
+      <button class="btn-create ripple" id="btnClearPhotos" style="width:100%;margin-top:20px;">🗑 Очистить все фото</button>
+      <div class="settings-hint" style="margin-top:10px;">Текст останется, но фото будут удалены у всех. Восстановить нельзя.</div>
+    </div>
+  </div>
+
+  <div id="screen-shop" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn ripple" id="btnBackShop">←</button>
+      <h1>🛍 Магазин</h1>
+      <div class="balance-badge" id="shopBalance">🪙 0 SQ</div>
+    </header>
+
+    <div class="shop-tabs">
+      <button class="shop-tab active" data-tab="shop">Магазин</button>
+      <button class="shop-tab" data-tab="market">Маркет</button>
+      <button class="shop-tab" data-tab="my">Моё</button>
+    </div>
+
+    <div class="shop-body">
+      <div id="shopTabShop" class="shop-tab-content">
+        <div class="shop-balance-card">
+          <div class="shop-balance-label">Ваш баланс</div>
+          <div class="shop-balance-value" id="shopBalanceBig">🪙 0 SQ</div>
+        </div>
+        <div class="shop-section-title">Ники</div>
+        <div class="shop-grid" id="shopGridNicks"></div>
+        <div class="shop-section-title">Значки</div>
+        <div class="shop-grid" id="shopGridEmojis"></div>
+        <div class="shop-section-title">Рамки</div>
+        <div class="shop-grid" id="shopGridFrames"></div>
+        <div class="shop-section-title">🏷 Кастомные юзернеймы</div>
+        <div class="shop-grid" id="shopGridUsernames"></div>
       </div>
-      <div class="settings-field">
-        <label>Фотографии</label>
-        <div class="settings-email-row"><span id="memoryPhotos">—</span></div>
+
+      <div id="shopTabMarket" class="shop-tab-content" style="display:none;">
+        <div class="shop-balance-card">
+          <div class="shop-balance-label">Ваш баланс</div>
+          <div class="shop-balance-value" id="shopBalanceBig2">🪙 0 SQ</div>
+        </div>
+        <div class="shop-section-title">🏪 Юзернеймы на продажу</div>
+        <div class="shop-grid" id="marketGrid"></div>
       </div>
-      <div class="settings-field">
-        <label>Текстовые сообщения</label>
-        <div class="settings-email-row"><span id="memoryTexts">—</span></div>
-      </div>
-      <button class="btn-create" id="btnClearPhotos" style="width:100%;margin-top:20px;">🗑 Очистить все фото</button>
-      <div class="settings-hint" style="margin-top:10px;">
-        Текст останется, но фото будут удалены у всех. Восстановить нельзя.
+
+      <div id="shopTabMy" class="shop-tab-content" style="display:none;">
+        <div class="shop-section-title">🏷 Мои юзернеймы</div>
+        <div class="shop-grid" id="myUsernamesGrid"></div>
       </div>
     </div>
   </div>
 
-  <!-- Экран 6: Sqwid+ -->
+  <div id="screen-inventory" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn ripple" id="btnBackInventory">←</button>
+      <h1>🎒 Инвентарь</h1>
+    </header>
+    <div class="shop-body">
+      <div class="shop-section-title">Активные</div>
+      <div id="inventoryActive" class="inventory-list"></div>
+      <div class="shop-section-title">Все покупки</div>
+      <div id="inventoryAll" class="inventory-list"></div>
+    </div>
+  </div>
+
   <div id="screen-plus" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackPlus">←</button>
-      <h1>⭐ Sqwid+</h1>
+      <button class="icon-btn ripple" id="btnBackPlus">←</button>
+      <h1><img src="sqwidstar.png" class="plus-title-icon" alt=""> Sqwid+</h1>
     </header>
     <div class="plus-body">
       <div class="plus-hero">
-        <div class="plus-logo">⭐</div>
+        <div class="plus-logo"><img src="sqwidstar.png" alt="Sqwid+" class="plus-logo-img"></div>
         <h2>Sqwid+</h2>
         <p class="plus-tagline">Больше возможностей, меньше ограничений</p>
       </div>
       <div class="plus-features">
-        <div class="plus-feature">✅ Значок ⭐ рядом с именем</div>
+        <div class="plus-feature">✅ Значок <img src="sqwidstar.png" class="plus-inline-icon" alt=""> рядом с именем</div>
         <div class="plus-feature">✅ Фото до 2 МБ</div>
         <div class="plus-feature">✅ Голосовые до 60 секунд</div>
+        <div class="plus-feature">✅ Цветная тема</div>
         <div class="plus-feature">✅ Неограниченные чаты</div>
-        <div class="plus-feature">✅ Цветной ник</div>
       </div>
       <h3 style="text-align:center;color:#8696a0;margin:24px 0 12px;">Выбери период</h3>
       <div class="tariff-list">
-        <button class="tariff-card" data-period="1"><div class="tariff-name">1 месяц</div><div class="tariff-price">Уточняется</div></button>
-        <button class="tariff-card" data-period="3"><div class="tariff-name">3 месяца</div><div class="tariff-price">Выгоднее</div></button>
-        <button class="tariff-card" data-period="6"><div class="tariff-name">6 месяцев</div><div class="tariff-price">Максимальная выгода</div></button>
+        <button class="tariff-card ripple" data-period="1"><div class="tariff-name">1 месяц</div><div class="tariff-price">Уточняется</div></button>
+        <button class="tariff-card ripple" data-period="3"><div class="tariff-name">3 месяца</div><div class="tariff-price">Выгоднее</div></button>
+        <button class="tariff-card ripple" data-period="6"><div class="tariff-name">6 месяцев</div><div class="tariff-price">Максимальная выгода</div></button>
       </div>
     </div>
   </div>
 
-  <!-- Экран 7: Бот -->
   <div id="screen-bot" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackBot">←</button>
+      <button class="icon-btn ripple" id="btnBackBot">←</button>
       <h1>@sqwid</h1>
     </header>
     <div id="botMessages" class="messages"></div>
     <div class="input-area" id="botInputArea">
       <input id="botInput" placeholder="Написать сообщение...">
-      <button class="send-btn" id="btnBotSend">➤</button>
+      <button class="send-btn ripple" id="btnBotSend">➤</button>
     </div>
   </div>
 
-  <!-- Экран 8: Поиск -->
   <div id="screen-search-users" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackSearch">←</button>
+      <button class="icon-btn ripple" id="btnBackSearch">←</button>
       <h1>Поиск</h1>
     </header>
     <div class="search-tabs">
       <button class="search-tab active" data-tab="people">Люди</button>
       <button class="search-tab" data-tab="chats">Чаты и каналы</button>
     </div>
-    <div class="search-bar">
-      <input id="userSearchInput" placeholder="Поиск...">
-    </div>
+    <div class="search-bar"><input id="userSearchInput" placeholder="Поиск..."></div>
     <ul id="userSearchList" class="chat-list"></ul>
     <ul id="chatSearchList" class="chat-list" style="display:none;"></ul>
   </div>
 
-  <!-- Экран 9: Админ -->
-  <div id="screen-admin" class="screen">
+  <div id="screen-user-profile" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackAdmin">←</button>
-      <h1>👑 Админ-панель</h1>
+      <button class="icon-btn ripple" id="btnBackUserProfile">←</button>
+      <h1>Профиль</h1>
     </header>
-    <div class="admin-body">
-      <div class="settings-field">
-        <label>Найти пользователя</label>
-        <input id="adminSearch" placeholder="Поиск по @юзернейму или имени...">
+    <div class="my-profile-body">
+      <div class="avatar-frame-wrap" id="upFrameWrap">
+        <img id="upPhoto" class="mp-photo" alt="">
       </div>
-      <h3 style="color:#8696a0;font-size:14px;margin:20px 0 10px;">Пользователи</h3>
-      <ul id="adminUserList" class="chat-list" style="flex:none;"></ul>
+      <h2 id="upName">Имя</h2>
+      <p id="upUsername" class="mp-username">@username</p>
+      <p id="upBio" class="mp-bio">—</p>
+      <button class="btn-create ripple" id="btnUpWrite" style="width:100%;margin-top:24px;">💬 Написать</button>
     </div>
   </div>
 
-  <!-- Экран 10: Аккаунты -->
+  <div id="screen-admin" class="screen">
+    <header class="app-bar">
+      <button class="icon-btn ripple" id="btnBackAdmin">←</button>
+      <h1>👑 Админ-панель</h1>
+    </header>
+    <div class="admin-body">
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="plus">Sqwid+</button>
+        <button class="admin-tab" data-tab="coins">SqwidCoins</button>
+      </div>
+
+      <div id="adminTabPlus" class="admin-tab-content">
+        <div class="settings-field">
+          <label>Найти пользователя</label>
+          <input id="adminSearch" placeholder="Поиск по @юзернейму или имени...">
+        </div>
+        <h3 style="color:#8696a0;font-size:14px;margin:20px 0 10px;">Пользователи</h3>
+        <ul id="adminUserList" class="chat-list" style="flex:none;"></ul>
+      </div>
+
+      <div id="adminTabCoins" class="admin-tab-content" style="display:none;">
+        <div class="settings-field">
+          <label>Найти пользователя</label>
+          <input id="adminSearchCoins" placeholder="Поиск по @юзернейму или имени...">
+        </div>
+        <h3 style="color:#8696a0;font-size:14px;margin:20px 0 10px;">Пользователи</h3>
+        <ul id="adminCoinsList" class="chat-list" style="flex:none;"></ul>
+      </div>
+    </div>
+  </div>
+
   <div id="screen-accounts" class="screen">
     <header class="app-bar">
-      <button class="icon-btn" id="btnBackAccounts">←</button>
+      <button class="icon-btn ripple" id="btnBackAccounts">←</button>
       <h1>Аккаунты</h1>
     </header>
     <div class="admin-body">
       <h3 style="color:#8696a0;font-size:14px;margin:0 0 10px;">Сохранённые аккаунты</h3>
       <ul id="accountsList" class="chat-list" style="flex:none;"></ul>
-      <button class="btn-create" id="btnAddAccount" style="margin-top:20px;width:100%;">+ Добавить аккаунт</button>
+      <button class="btn-create ripple" id="btnAddAccount" style="margin-top:20px;width:100%;">+ Добавить аккаунт</button>
     </div>
   </div>
 
-  <!-- Универсальная модалка -->
   <div id="modal-alert" class="modal">
     <div class="modal-content">
       <h2 id="alertTitle">Сообщение</h2>
       <p id="alertText" style="color:#cfd8dc;font-size:15px;line-height:1.5;margin:0 0 16px;white-space:pre-wrap;"></p>
       <div class="modal-buttons">
-        <button class="btn-cancel" id="alertCancel" style="display:none;">Отмена</button>
-        <button class="btn-create" id="alertOk">ОК</button>
+        <button class="btn-cancel ripple" id="alertCancel" style="display:none;">Отмена</button>
+        <button class="btn-create ripple" id="alertOk">ОК</button>
       </div>
     </div>
   </div>
 
-  <!-- Модалка: создание чата -->
   <div id="modal-create" class="modal">
     <div class="modal-content">
       <h2>Новый чат</h2>
@@ -254,106 +385,152 @@
         <span id="chatAvatarText">Фото чата (необязательно)</span>
       </label>
       <input id="chatName" placeholder="Название чата">
-      <textarea id="chatDescription" placeholder="Описание (необязательно)" rows="2"
-        style="width:100%;padding:12px;margin-bottom:12px;border-radius:8px;border:none;background:#2a3942;color:#e9edef;font-size:15px;box-sizing:border-box;resize:none;"></textarea>
+      <textarea id="chatDescription" placeholder="Описание (необязательно)" rows="2" style="width:100%;padding:12px;margin-bottom:12px;border-radius:8px;border:none;background:#2a3942;color:#e9edef;font-size:15px;box-sizing:border-box;resize:none;"></textarea>
       <select id="chatType">
         <option value="public">Публичный чат</option>
         <option value="private">Приватный чат</option>
         <option value="group">Группа</option>
         <option value="channel">Канал</option>
       </select>
-      <input id="chatSlug" placeholder="@юзернейм (для групп и каналов)" maxlength="20"
-        style="display:none;text-transform:lowercase;">
-      <div id="chatSlugHint" class="settings-hint" style="display:none;margin:-8px 0 12px 0;">
-        Латиница, цифры и _ . От 3 до 20 символов
-      </div>
+      <input id="chatSlug" placeholder="@юзернейм (для групп и каналов)" maxlength="20" style="display:none;text-transform:lowercase;">
+      <div id="chatSlugHint" class="settings-hint" style="display:none;margin:-8px 0 12px 0;">Латиница, цифры и _ . От 3 до 20 символов</div>
       <select id="userSelect" multiple style="display:none;"></select>
       <label id="channelPublicLabel" style="display:none;color:#8696a0;font-size:14px;margin:8px 0;flex-direction:row;align-items:center;">
         <input type="checkbox" id="channelIsPublic" checked style="width:auto;margin-right:8px;">
         Публичный канал (виден всем)
       </label>
       <div class="modal-buttons">
-        <button class="btn-cancel" id="btnCancel">Отмена</button>
-        <button class="btn-create" id="btnCreate">Создать</button>
+        <button class="btn-cancel ripple" id="btnCancel">Отмена</button>
+        <button class="btn-create ripple" id="btnCreate">Создать</button>
       </div>
     </div>
   </div>
 
-  <!-- Модалка: ссылка -->
   <div id="modal-invite" class="modal">
     <div class="modal-content">
       <h2>Ссылка на чат</h2>
       <p style="color:#8696a0;font-size:14px;">Отправь эту ссылку тому, кого хочешь пригласить:</p>
       <input id="inviteLink" readonly style="background:#0b141a;color:#00a884;font-size:13px;">
       <div class="modal-buttons">
-        <button class="btn-cancel" id="btnCloseInvite">Закрыть</button>
-        <button class="btn-create" id="btnCopyInvite">Копировать</button>
+        <button class="btn-cancel ripple" id="btnCloseInvite">Закрыть</button>
+        <button class="btn-create ripple" id="btnCopyInvite">Копировать</button>
       </div>
     </div>
   </div>
 
-  <!-- Модалка: действия -->
+  <div id="modal-share" class="modal">
+    <div class="modal-content">
+      <h2>Поделиться профилем</h2>
+      <p style="color:#8696a0;font-size:14px;">Отправь эту ссылку — по ней откроется твой профиль:</p>
+      <input id="shareLink" readonly style="background:#0b141a;color:#00a884;font-size:13px;">
+      <div class="modal-buttons">
+        <button class="btn-cancel ripple" id="btnCloseShare">Закрыть</button>
+        <button class="btn-create ripple" id="btnCopyShare">Копировать</button>
+      </div>
+    </div>
+  </div>
+
   <div id="modal-chatActions" class="modal">
     <div class="modal-content">
       <h2 id="chatActionsTitle">Чат</h2>
       <div id="chatActionsList"></div>
       <div class="modal-buttons" style="margin-top:12px;">
-        <button class="btn-cancel" id="btnChatActionsCancel">Отмена</button>
+        <button class="btn-cancel ripple" id="btnChatActionsCancel">Отмена</button>
       </div>
     </div>
   </div>
 
-  <!-- Модалка: Sqwid+ -->
   <div id="modal-givePlus" class="modal">
     <div class="modal-content">
       <h2>Выдать Sqwid+</h2>
       <p id="givePlusUser" style="color:#8696a0;font-size:14px;margin:0 0 16px;white-space:pre-wrap;"></p>
       <h3 style="font-size:14px;color:#8696a0;margin:0 0 10px;">Срок:</h3>
       <div class="tariff-list">
-        <button class="tariff-card give-plus-option" data-period="1"><div class="tariff-name">1 месяц</div></button>
-        <button class="tariff-card give-plus-option" data-period="3"><div class="tariff-name">3 месяца</div></button>
-        <button class="tariff-card give-plus-option" data-period="6"><div class="tariff-name">6 месяцев</div></button>
+        <button class="tariff-card give-plus-option ripple" data-period="1"><div class="tariff-name">1 месяц</div></button>
+        <button class="tariff-card give-plus-option ripple" data-period="3"><div class="tariff-name">3 месяца</div></button>
+        <button class="tariff-card give-plus-option ripple" data-period="6"><div class="tariff-name">6 месяцев</div></button>
       </div>
-      <button class="btn-create" id="btnGivePlusConfirm" style="margin-top:16px;width:100%;">Выдать</button>
-      <button class="btn-cancel" id="btnGivePlusCancel" style="margin-top:8px;width:100%;">Отмена</button>
+      <button class="btn-create ripple" id="btnGivePlusConfirm" style="margin-top:16px;width:100%;">Выдать</button>
+      <button class="btn-cancel ripple" id="btnGivePlusCancel" style="margin-top:8px;width:100%;">Отмена</button>
     </div>
   </div>
 
-  <!-- Бургер -->
+  <div id="modal-giveCoins" class="modal">
+    <div class="modal-content">
+      <h2>🪙 Выдать SqwidCoins</h2>
+      <p id="giveCoinsUser" style="color:#8696a0;font-size:14px;margin:0 0 16px;white-space:pre-wrap;"></p>
+      <p id="giveCoinsCurrent" style="color:#f7b500;font-size:14px;margin:0 0 16px;font-weight:600;"></p>
+      <div class="settings-field">
+        <label>Сколько SQ выдать?</label>
+        <input id="giveCoinsAmount" type="number" min="1" value="100" placeholder="100">
+      </div>
+      <div class="settings-hint" style="margin-bottom:12px;">
+        Введи положительное число для выдачи, отрицательное — для списания.
+      </div>
+      <button class="btn-create ripple" id="btnGiveCoinsConfirm" style="width:100%;">Выдать</button>
+      <button class="btn-cancel ripple" id="btnGiveCoinsCancel" style="margin-top:8px;width:100%;">Отмена</button>
+    </div>
+  </div>
+
+  <div id="modal-sell" class="modal">
+    <div class="modal-content">
+      <h2>🏪 Продать юзернейм</h2>
+      <p style="color:#8696a0;font-size:14px;margin:0 0 12px;">
+        Ты продаёшь: <b id="sellItemName" style="color:#f7b500;"></b>
+      </p>
+      <div class="settings-field">
+        <label>Цена в SQ</label>
+        <input id="sellPrice" type="number" min="1" value="1000">
+      </div>
+      <div class="settings-hint" style="margin-bottom:12px;">
+        Другая цена — твоё дело. Покупатель заплатит её.
+      </div>
+      <button class="btn-create ripple" id="btnSellConfirm" style="width:100%;">Выставить</button>
+      <button class="btn-cancel ripple" id="btnSellCancel" style="margin-top:8px;width:100%;">Отмена</button>
+    </div>
+  </div>
+
   <div id="profileMenu" class="profile-menu">
     <div class="profile-menu-inner">
+      <button class="profile-menu-close ripple" id="btnCloseProfile">✕</button>
       <img id="profilePhoto" class="profile-photo" alt="">
       <h2 id="profileName">Имя</h2>
       <div class="profile-email-row">
         <span id="profileEmail">email</span>
-        <button id="btnToggleEmail" class="btn-toggle">Скрыть</button>
+        <button id="btnToggleEmail" class="btn-toggle ripple">Скрыть</button>
       </div>
+      <div class="profile-coins-row" id="burgerCoinsRow">🪙 <span id="burgerCoins">0</span> SQ</div>
       <hr>
-      <button class="menu-item" id="btnAccounts">👥 Аккаунты</button>
-      <button class="menu-item" id="btnSettings">Настройки</button>
-      <button class="menu-item" id="btnAbout">О приложении</button>
-      <button class="menu-item danger" id="btnLogout">Выйти</button>
-      <button class="menu-item" id="btnCloseProfile">Закрыть</button>
+      <button class="menu-item ripple" id="btnMyProfile">👤 Мой профиль</button>
+      <button class="menu-item ripple" id="btnOpenShopBurger">🛍 Магазин</button>
+      <button class="menu-item ripple" id="btnOpenInventory">🎒 Инвентарь</button>
+      <button class="menu-item ripple" id="btnAccounts">👥 Аккаунты</button>
+      <button class="menu-item ripple" id="btnSettings">⚙️ Настройки</button>
+      <button class="menu-item ripple" id="btnAbout">ℹ️ О приложении</button>
+      <button class="menu-item danger ripple" id="btnLogout">🚪 Выйти</button>
       <hr>
-      <button class="menu-item" id="btnAdminPanel" style="color:#ff6b6b;display:none;">👑 Админ-панель</button>
-      <button class="menu-item" id="btnSqwidPlus" style="color:#f7b500;">⭐ Sqwid+</button>
+      <button class="menu-item ripple" id="btnAdminPanel" style="color:#ff6b6b;display:none;">👑 Админ-панель</button>
+      <button class="menu-item ripple" id="btnSqwidPlus" style="color:#f7b500;">
+        <img src="sqwidstar.png" class="plus-inline-icon" alt=""> Sqwid+
+      </button>
     </div>
   </div>
 
-  <!-- О приложении -->
   <div id="modal-about" class="modal">
     <div class="modal-content">
       <h2>О приложении</h2>
       <p style="font-size:15px;line-height:1.5;">Мессенджер создан с любовью — пользуйтесь наздоровье 💚</p>
       <p style="font-size:14px;color:#00a884;">Разработчик: <b>sqw1d1k game</b></p>
+      <p style="font-size:13px;color:#8696a0;">Версия 1.0.0</p>
       <div class="modal-buttons">
-        <button class="btn-create" id="btnCloseAbout">Закрыть</button>
+        <button class="btn-create ripple" id="btnCloseAbout">Закрыть</button>
       </div>
     </div>
   </div>
 
   <div id="toast" class="toast"></div>
   <div id="photoViewer"><img id="photoViewerImg" alt=""></div>
+
 
   <script type="module" src="chat.js"></script>
 </body>
